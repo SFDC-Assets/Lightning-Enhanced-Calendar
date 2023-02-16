@@ -1,0 +1,92 @@
+<!--
+//  HTML markup for the Lightning Enhanced Calendar LWC.
+//
+//  Copyright (c) 2023, salesforce.com, inc.
+//  All rights reserved.
+//  SPDX-License-Identifier: BSD-3-Clause
+//  For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+//
+//  Contact: john.meyer@salesforce.com<template>
+-->
+<template>
+	<lightning-modal-header label={labels.GET_INFORMATION_MODAL_HEADER}></lightning-modal-header>
+	<lightning-modal-body>
+		<template lwc:if={showConfirmationDialog}>
+			<div class="slds-p-horizontal_medium slds-p-vertical_medium">
+				<p class="slds-align_absolute-center slds-text-heading_medium">
+					<lightning-icon
+						class="slds-p-right_medium"
+						icon-name="utility:warning"
+						variant="warning"
+						size="medium"
+					></lightning-icon>
+					<lightning-formatted-text value={labels.ARE_YOU_SURE}></lightning-formatted-text>
+				</p>
+			</div>
+		</template>
+		<template lwc:else>
+			<lightning-input type="text" label={eventTitleLabel} value={eventTitle} disabled></lightning-input>
+			<lightning-layout horizontal-align="spread" class="slds-var-p-top_small">
+				<lightning-layout-item size="6">
+					<lightning-input
+						type="datetime"
+						label={startLabel}
+						value={startDate}
+						data-id="startDate"
+						disabled
+					></lightning-input>
+				</lightning-layout-item>
+				<lightning-layout-item size="6">
+					<lightning-input type="datetime" label={endLabel} value={endDate} data-id="endDate" disabled></lightning-input>
+				</lightning-layout-item>
+			</lightning-layout>
+		</template>
+	</lightning-modal-body>
+	<lightning-modal-footer>
+		<template lwc:if={showConfirmationDialog}>
+			<lightning-layout horizontal-align="spread">
+				<lightning-layout-item class="slds-float_left">
+					<lightning-button
+						label={labels.DELETE}
+						icon-name="utility:delete"
+						variant="destructive"
+						onclick={handleConfirmDeleteButton}
+					></lightning-button>
+				</lightning-layout-item>
+				<lightning-layout-item class="slds-float_right">
+					<lightning-button
+						class="slds-p-right_x-small"
+						label={labels.CANCEL}
+						icon-name="utility:close"
+						onclick={handleCloseButton}
+					></lightning-button>
+				</lightning-layout-item>
+			</lightning-layout>
+		</template>
+		<template lwc:else>
+			<lightning-layout horizontal-align="spread">
+				<lightning-layout-item class="slds-float_left">
+					<lightning-button
+						class="slds-p-right_x-small"
+						label={labels.CLOSE}
+						icon-name="utility:close"
+						onclick={handleCloseButton}
+					></lightning-button>
+					<lightning-button
+						label={labels.GO_TO_CALENDAR_ENTRY}
+						icon-name="utility:new_window"
+						onclick={handleGoToCalendarEntryButton}
+					></lightning-button>
+				</lightning-layout-item>
+				<lightning-layout-item class="slds-float_right">
+					<lightning-button
+						label={labels.DELETE}
+						icon-name="utility:delete"
+						variant="destructive"
+						onclick={handleDeleteButton}
+					></lightning-button>
+				</lightning-layout-item>
+			</lightning-layout>
+		</template>
+	</lightning-modal-footer>
+</template>

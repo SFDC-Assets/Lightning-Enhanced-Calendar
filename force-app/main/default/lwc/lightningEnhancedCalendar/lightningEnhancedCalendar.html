@@ -1,0 +1,163 @@
+<!--
+//  HTML markup for the Lightning Enhanced Calendar LWC.
+//
+//  Copyright (c) 2023, salesforce.com, inc.
+//  All rights reserved.
+//  SPDX-License-Identifier: BSD-3-Clause
+//  For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+//
+//  Contact: john.meyer@salesforce.com<template>
+-->
+<template>
+	<lightning-card title={cardTitle} icon-name="standard:event">
+		<template lwc:if={spinnerVisible}>
+			<lightning-spinner variant="brand" alternative-text="Loading calendar entries ..."></lightning-spinner>
+		</template>
+		<header slot="actions">
+			<lightning-button-group>
+				<lightning-button
+					label={labels.NEW_LABEL}
+					icon-name="utility:add"
+					title={labels.CREATE_NEW_CALENDAR_ENTRY}
+					onclick={handleNewEvent}
+				></lightning-button>
+				<lightning-button-icon
+					icon-name="utility:info"
+					alternative-text={labels.ABOUT_LIGHTNING_ENHANCED_CALENDAR}
+					title={labels.ABOUT_LIGHTNING_ENHANCED_CALENDAR}
+					onclick={handleAboutModal}
+				></lightning-button-icon>
+			</lightning-button-group>
+		</header>
+		<div class="slds-p-horizontal_medium">
+			<lightning-layout horizontal-align="spread" vertical-align="end">
+				<lightning-layout-item>
+					<lightning-layout horizontal-align="spread">
+						<lightning-layout-item>
+							<p class="slds-text-title slds-text-align_left slds-p-bottom_xx-small">
+								<lightning-formatted-text value={labels.DURATION}></lightning-formatted-text>
+							</p>
+							<div>
+								<lightning-button-group>
+									<lightning-button-icon-stateful
+										icon-name="utility:dayview"
+										variant={durations.day.variant}
+										value="day"
+										alternative-text={labels.TOGGLE_DAY_VIEW}
+										title={labels.TOGGLE_DAY_VIEW}
+										selected={durations.day.selected}
+										onclick={handleDurationButton}
+									></lightning-button-icon-stateful>
+									<lightning-button-icon-stateful
+										icon-name="utility:weeklyview"
+										variant={durations.week.variant}
+										value="week"
+										alternative-text={labels.TOGGLE_WEEK_VIEW}
+										title={labels.TOGGLE_WEEK_VIEW}
+										selected={durations.week.selected}
+										onclick={handleDurationButton}
+									></lightning-button-icon-stateful>
+									<lightning-button-icon-stateful
+										icon-name="utility:monthlyview"
+										variant={durations.month.variant}
+										value="month"
+										alternative-text={labels.TOGGLE_MONTH_VIEW}
+										title={labels.TOGGLE_MONTH_VIEW}
+										selected={durations.month.selected}
+										onclick={handleDurationButton}
+									></lightning-button-icon-stateful>
+									<lightning-button-icon-stateful
+										icon-name="utility:date_input"
+										variant={durations.year.variant}
+										value="year"
+										alternative-text={labels.TOGGLE_YEAR_VIEW}
+										title={labels.TOGGLE_YEAR_VIEW}
+										selected={durations.year.selected}
+										onclick={handleDurationButton}
+									></lightning-button-icon-stateful>
+								</lightning-button-group>
+							</div>
+						</lightning-layout-item>
+						<lightning-layout-item class="slds-p-left_large">
+							<p class="slds-text-title slds-text-align_left slds-p-bottom_xx-small">
+								<lightning-formatted-text value={labels.TYPE}></lightning-formatted-text>
+							</p>
+							<div>
+								<lightning-button-group>
+									<lightning-button-icon-stateful
+										icon-name="utility:event"
+										variant={types.calendar.variant}
+										value="calendar"
+										alternative-text={labels.TOGGLE_CALENDAR_VIEW}
+										title={labels.TOGGLE_CALENDAR_VIEW}
+										selected={types.calendar.selected}
+										onclick={handleTypeButton}
+									></lightning-button-icon-stateful>
+									<lightning-button-icon-stateful
+										icon-name="utility:list"
+										variant={types.list.variant}
+										value="list"
+										alternative-text={labels.TOGGLE_LIST_VIEW}
+										title={labels.TOGGLE_LIST_VIEW}
+										selected={types.list.selected}
+										onclick={handleTypeButton}
+									></lightning-button-icon-stateful>
+									<lightning-button-icon-stateful
+										icon-name="utility:shift_ui"
+										variant={types.timeline.variant}
+										value="timeline"
+										alternative-text={labels.TOGGLE_TIMELINE_VIEW}
+										title={labels.TOGGLE_TIMELINE_VIEW}
+										selected={types.timeline.selected}
+										onclick={handleTypeButton}
+									></lightning-button-icon-stateful>
+								</lightning-button-group>
+							</div>
+						</lightning-layout-item>
+					</lightning-layout>
+				</lightning-layout-item>
+				<lightning-layout-item>
+					<lightning-layout vertical-align="end">
+						<lightning-layout-item>
+							<lightning-input
+								label={labels.GO_TO_DATE}
+								type="date"
+								date-style="short"
+								onchange={handleGotoDateButton}
+							></lightning-input>
+						</lightning-layout-item>
+						<lightning-layout-item>
+							<lightning-button-group class="slds-p-left_medium">
+								<lightning-button-icon
+									icon-name="utility:left"
+									alternative-text={labels.GO_TO_PREVIOUS_PAGE}
+									title={labels.GO_TO_PREVIOUS_PAGE}
+									onclick={handlePreviousButton}
+								></lightning-button-icon>
+								<lightning-button
+									label={labels.TODAY}
+									title={labels.GO_TO_TODAYS_PAGE}
+									onclick={handleTodayButton}
+								></lightning-button>
+								<lightning-button-icon
+									icon-name="utility:right"
+									alternative-text={labels.GO_TO_NEXT_PAGE}
+									title={labels.GO_TO_NEXT_PAGE}
+									onclick={handleNextButton}
+								></lightning-button-icon>
+							</lightning-button-group>
+						</lightning-layout-item>
+					</lightning-layout>
+				</lightning-layout-item>
+			</lightning-layout>
+			<div class="slds-var-p-vertical_medium slds-text-heading_small slds-text-align_center">
+				<strong>
+					<lightning-formatted-text value={calendarTitle}></lightning-formatted-text>
+				</strong>
+			</div>
+			<div class="calendar">
+				<div lwc:ref="calendar" lwc:dom="manual" ontouchmove={handleScroll} onscroll={handleScroll}></div>
+			</div>
+		</div>
+	</lightning-card>
+</template>

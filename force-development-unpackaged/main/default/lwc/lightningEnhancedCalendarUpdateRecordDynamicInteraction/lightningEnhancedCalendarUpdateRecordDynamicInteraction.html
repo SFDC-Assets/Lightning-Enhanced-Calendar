@@ -1,0 +1,62 @@
+<template
+	><!--
+    //  HTML markup for the Update Record Dynamic Interaction Tester for the Lightning Enhanced Calendar LWC.
+    //
+    //  Copyright (c) 2023, salesforce.com, inc.
+    //  All rights reserved.
+    //  SPDX-License-Identifier: BSD-3-Clause
+    //  For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+    //
+    //  Contact: john.meyer@salesforce.com<template>
+    -->
+	<lightning-card title="Lightning Enhanced Calendar Dynamic Interaction Tester" icon-name="standard:event">
+		<div class="slds-p-horizontal_medium">
+			<dl class="slds-dl_horizontal">
+				<dt class="slds-dl_horizontal__label"><strong>Kind:</strong></dt>
+				<dd class="slds-dl_horizontal__detail">
+					<lightning-formatted-text value={kind}></lightning-formatted-text>
+				</dd>
+				<dt class="slds-dl_horizontal__label"><strong>Record ID:</strong></dt>
+				<dd class="slds-dl_horizontal__detail">
+					<lightning-formatted-text class="slds-text-font_monospace" value={recordId}></lightning-formatted-text>
+				</dd>
+				<dt class="slds-dl_horizontal__label"><strong>Object:</strong></dt>
+				<dd class="slds-dl_horizontal__detail">
+					<lightning-formatted-text class="slds-text-font_monospace" value={objectApiName}></lightning-formatted-text>
+				</dd>
+				<dt class="slds-dl_horizontal__label"><strong>Start Field:</strong></dt>
+				<dd class="slds-dl_horizontal__detail">
+					<lightning-formatted-text class="slds-text-font_monospace" value={startApiName}></lightning-formatted-text>
+				</dd>
+				<dt class="slds-dl_horizontal__label"><strong>End Field:</strong></dt>
+				<dd class="slds-dl_horizontal__detail">
+					<lightning-formatted-text class="slds-text-font_monospace" value={endApiName}></lightning-formatted-text>
+				</dd>
+				<dt class="slds-dl_horizontal__label"><strong>Start:</strong></dt>
+				<dd class="slds-dl_horizontal__detail">
+					<lightning-formatted-date-time
+						value={start}
+						year="numeric"
+						month="long"
+						day="numeric"
+						hour="numeric"
+						minute="2-digit"
+						time-zone-name="short"
+					></lightning-formatted-date-time>
+				</dd>
+				<dt class="slds-dl_horizontal__label"><strong>End:</strong></dt>
+				<dd class="slds-dl_horizontal__detail">
+					<lightning-formatted-date-time
+						value={end}
+						year="numeric"
+						month="long"
+						day="numeric"
+						hour="numeric"
+						minute="2-digit"
+						time-zone-name="short"
+					></lightning-formatted-date-time>
+				</dd>
+			</dl>
+		</div>
+	</lightning-card>
+</template>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <masterLabel>Lightning Enhanced Calendar Dynamic Interaction Tester</masterLabel>
+    <description>A Lightning Web Component for testing dynamic interactions from the Lightning Enhanced Calendar LWC.</description>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage">
+            <property name="kind" label="Event Kind" type="String" description="The kind of event that occurred: create, update, or delete." />
+            <property name="recordId" label="Record ID" type="String" description="The record ID of the entry that changed." />
+            <property name="objectApiName" label="Object API Name" type="String" description="The API name of the object updated." />
+            <property name="startApiName" label="Start DateTime Field API Name" type="String" description="The API name of the starting DateTime field." />
+            <property name="endApiName" label="End DateTime Field API Name" type="String" description="The API name of the ending DateTime field." />
+            <property name="start" label="Start Date" type="String" description="The start date and time of the event updated." />
+            <property name="end" label="End Date" type="String" description="The end date and time of the event updated." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

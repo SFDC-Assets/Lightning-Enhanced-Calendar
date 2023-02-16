@@ -1,0 +1,8 @@
+:host {
+	--slds-c-button-inverse-shadow-focus: 0 0 0px #f3f3f3;
+	--slds-c-button-shadow-focus: 0 0 0px #0176d3;
+}
+
+:host .calendar {
+	width: 100% !important;
+}

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>57.0</apiVersion>
+    <masterLabel>Lightning Enhanced Calendar</masterLabel>
+    <description>A Lightning Web Component that displays records from multiple objects on a calendar.</description>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage">
+            <property name="cardTitle" label="Card Title" type="String" default="Calendar"
+                description="The title to be used at the top of the card." />
+            <property name="defaultDuration" label="Default Calendar Duration" type="String" default="week"
+                datasource="apex://LightningEnhancedCalendarDurationView"
+                description="The default duration (day, week, month, year) that appears when the component first loads." />
+            <property name="defaultType" label="Default Calendar Type" type="String" default="calendar"
+                datasource="apex://LightningEnhancedCalendarTypeView"
+                description="The type of calendar view that appears when the component first loads." />
+            <property name="objects" label="Objects" type="String"
+                default='[{"objectApiName": "Event", "startApiName": "StartDateTime", "endApiName": "EndDateTime", "filter": "CreatedDate > 2005-01-01T01:01:00Z", "color": "#3A87AD"}]'
+                description="A JSON string representing an array of objects containing the object API name, the API names of the start and end fields, and the color. Please see the documentation for details."
+                required="true" />
+            <property name="shadeWeekends" label="Shade Weekends" type="Boolean" default="false"
+                description="Check if weekends should be shaded." />
+            <property name="showWeekNumbers" label="Show Week Numbers" type="Boolean" default="false"
+                description="Show week numbers in the calendar." />
+            <property name="licenseKey" label="License Key" type="String" default="GPL-My-Project-Is-Open-Source"
+                description="FullCalendar license key" required="true" />
+            <event name="leceventchanged" label="Calendar Entry Changed"
+                description="This event fires when an entry in the calendar gets created, updated, or deleted.">
+                <schema>
+                    {
+                        "type": "object",
+                        "properties": {
+                            "kind": {
+                                "type": "string",
+                                "title": "Event Kind",
+                                "description": "The kind of event that occurred: create, update, or delete."
+                            },
+                            "recordId": {
+                                "type": "string",
+                                "title": "Record ID",
+                                "description": "The record ID of the entry that changed."
+                            },
+                            "objectApiName": {
+                                "type": "string",
+                                "title": "Object API Name",
+                                "description": "The API name of the object that changed."
+                            },
+                            "startApiName": {
+                                "type": "string",
+                                "title": "Start DateTime API Name",
+                                "description": "The API name of the starting DateTime."
+                            },
+                            "endApiName": {
+                                "type": "string",
+                                "title": "End DateTime API Name",
+                                "description": "The API name of the ending DateTime."
+                            },
+                            "start": {
+                                "type": "string",
+                                "title": "New Starting Time",
+                                "description": "The new starting time of the entry."
+                            },
+                            "end": {
+                                "type": "string",
+                                "title": "New Ending Time",
+                                "description": "The new ending time of the entry."
+                            }
+                        }
+                    }
+                </schema>
+            </event>
+            <supportedFormFactors>
+                <supportedFormFactor type="Large" />
+            </supportedFormFactors>
+        </targetConfig>
+        <targetConfig targets="lightning__HomePage,lightning__RecordPage">
+            <property name="cardTitle" label="Card Title" type="String" default="Calendar"
+                description="The title to be used at the top of the card." />
+            <property name="defaultDuration" label="Default Calendar Duration" type="String" default="week"
+                datasource="apex://LightningEnhancedCalendarDurationView"
+                description="The default duration (day, week, month, year) that appears when the component first loads." />
+            <property name="defaultType" label="Default Calendar Type" type="String" default="calendar"
+                datasource="apex://LightningEnhancedCalendarTypeView"
+                description="The type of calendar view that appears when the component first loads." />
+            <property name="objects" label="Objects" type="String"
+                default='[{"objectApiName": "Event", "startApiName": "StartDateTime", "endApiName": "EndDateTime", "filter": "CreatedDate > 2005-01-01T01:01:00Z", "color": "#3A87AD"}]'
+                description="A JSON string representing an array of objects containing the object API name, the API names of the start and end fields, and the color. Please see the documentation for details."
+                required="true" />
+            <property name="shadeWeekends" label="Shade Weekends" type="Boolean" default="false"
+                description="Check if weekends should be shaded." />
+            <property name="showWeekNumbers" label="Show Week Numbers" type="Boolean" default="false"
+                description="Show week numbers in the calendar." />
+            <property name="licenseKey" label="License Key" type="String" default="GPL-My-Project-Is-Open-Source"
+                description="FullCalendar license key" required="true" />
+            <supportedFormFactors>
+                <supportedFormFactor type="Large" />
+            </supportedFormFactors>
+        </targetConfig>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="cardTitle" label="Card Title" type="String" default="Calendar"
+                description="The title to be used at the top of the card." />
+            <property name="defaultDuration" label="Default Calendar Duration" type="String" default="week"
+                datasource="apex://LightningEnhancedCalendarDurationView"
+                description="The default duration (day, week, month, year) that appears when the component first loads." />
+            <property name="defaultType" label="Default Calendar Type" type="String" default="calendar"
+                datasource="apex://LightningEnhancedCalendarTypeView"
+                description="The type of calendar view that appears when the component first loads." />
+            <property name="objects" label="Objects" type="String"
+            default='[{"objectApiName": "Event", "startApiName": "StartDateTime", "endApiName": "EndDateTime", "filter": "CreatedDate > 2005-01-01T01:01:00Z", "color": "#3A87AD"}]'
+                description="A JSON string representing an array of objects containing the object API name, the API names of the start and end fields, and the color. Please see the documentation for details."
+                required="true" />
+            <property name="shadeWeekends" label="Shade Weekends" type="Boolean" default="false"
+                description="Check if weekends should be shaded." />
+            <property name="showWeekNumbers" label="Show Week Numbers" type="Boolean" default="false"
+                description="Show week numbers in the calendar." />
+                <property name="licenseKey" label="License Key" type="String" default="GPL-My-Project-Is-Open-Source"
+                description="FullCalendar license key" required="true" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

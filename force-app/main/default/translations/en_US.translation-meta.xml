@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customApplications>
+        <label><!-- Lightning Enhanced Calendar Test Bed --></label>
+        <name>Lightning_Enhanced_Calendar_Test_Bed</name>
+    </customApplications>
+    <customLabels>
+        <label><!-- Used by Lightning Enhanced Calendar --></label>
+        <name>LEC_Must_Be_Earlier_Than</name>
+    </customLabels>
+    <customTabs>
+        <label><!-- Lightning Enhanced Calendar --></label>
+        <name>Lightning_Enhanced_Calendar</name>
+    </customTabs>
+</Translations>

@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>LEC_Go_To_Date</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Go to Date</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Go_To_Next_Page</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Go to next page</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Go_To_Previous_Page</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Go to previous page</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Go_To_Todays_Page</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Go to today&apos;s page</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Must_Be_Earlier_Than</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>must be earlier than</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Today</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Today</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Create_New_Calendar_Entry</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Create new calendar entry</value>
+    </labels>
+    <labels>
+        <fullName>LEC_New</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>New</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Duration</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Duration</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Type</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Type</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Calendar_Entry_Type</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Calendar Entry Type</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Cancel</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Please_Select_Calendar_Entry_Type</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Please select the type of calendar entry</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Save</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Close</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Delete</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Delete</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Get_Information_Modal_Header</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Get Information</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Go_To_Calendar_Entry</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Go to Calendar Entry</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Create_New_Calendar_Entry_Modal_Header</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Create New Calendar Entry</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Calendar_Entry_Successfully_Created</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Calendar entry successfully created</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Calendar_Entry_Successfully_Deleted</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Calendar entry successfully deleted</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Calendar_Entry_Successfully_Updated</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Calendar entry successfully updated</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Update_Calendar_Entry_Modal_Header</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Update Calendar Entry</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Toggle_Calendar_View</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Toggle calendar view</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Toggle_Day_View</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Toggle day view</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Toggle_List_View</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Toggle list view</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Toggle_Month_View</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Toggle month view</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Toggle_Timeline_View</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Toggle timeline view</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Toggle_Week_View</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Toggle week view</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Toggle_Year_View</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Toggle year view</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Are_You_Sure</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Are you sure?</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Bad_Objects_String</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>The &quot;Objects&quot; configuration variable is corrupt. Please fix it and try again.</value>
+    </labels>
+    <labels>
+        <fullName>LEC_About_Lightning_Enhanced_Calendar</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>About Lightning Enhanced Calendar</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Could_Not_Get_Calendar_Entries</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Could not get calendar entries for</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Could_Not_Load_Calendar</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Could not load any calendar entries</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Could_Not_Load_Main_JavaScript_Libraries</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Could not load main JavaScript libraries</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Could_Not_Load_Supplemental_JavaScript_Libraries</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Could not load supplemental JavaScript libraries</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Could_Not_Create_Calendar_Entry</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Could not create calendar entry</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Could_Not_Delete_Calendar_Entry</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Could not delete calendar entry</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Could_Not_Load_Calendar_Entries</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Could not load calendar entries</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Could_Not_Update_Calendar_Entry</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Could not update calendar entry</value>
+    </labels>
+</CustomLabels>

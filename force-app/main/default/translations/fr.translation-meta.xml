@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customApplications>
+        <label><!-- Lightning Enhanced Calendar Test Bed --></label>
+        <name>Lightning_Enhanced_Calendar_Test_Bed</name>
+    </customApplications>
+    <customLabels>
+        <label>À propos du Lightning Enhanced Calendar</label>
+        <name>LEC_About_Lightning_Enhanced_Calendar</name>
+    </customLabels>
+    <customLabels>
+        <label>Êtes-vous sûr?</label>
+        <name>LEC_Are_You_Sure</name>
+    </customLabels>
+    <customLabels>
+        <label>La variable de configuration &quot;Objects&quot; est corrompue. Veuillez le corriger et réessayer.</label>
+        <name>LEC_Bad_Objects_String</name>
+    </customLabels>
+    <customLabels>
+        <label>Entrée d&apos;agenda créée avec succès</label>
+        <name>LEC_Calendar_Entry_Successfully_Created</name>
+    </customLabels>
+    <customLabels>
+        <label>Entrée d&apos;agenda supprimée avec succès</label>
+        <name>LEC_Calendar_Entry_Successfully_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>Entrée d&apos;agenda mise à jour avec succès</label>
+        <name>LEC_Calendar_Entry_Successfully_Updated</name>
+    </customLabels>
+    <customLabels>
+        <label>Type d&apos;entrée de calendrier</label>
+        <name>LEC_Calendar_Entry_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Annuler</label>
+        <name>LEC_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>Fermer</label>
+        <name>LEC_Close</name>
+    </customLabels>
+    <customLabels>
+        <label>Impossible de créer une entrée d&apos;agenda</label>
+        <name>LEC_Could_Not_Create_Calendar_Entry</name>
+    </customLabels>
+    <customLabels>
+        <label>Impossible de supprimer l&apos;entrée d&apos;agenda</label>
+        <name>LEC_Could_Not_Delete_Calendar_Entry</name>
+    </customLabels>
+    <customLabels>
+        <label>Impossible d&apos;obtenir les entrées d&apos;agenda pour</label>
+        <name>LEC_Could_Not_Get_Calendar_Entries</name>
+    </customLabels>
+    <customLabels>
+        <label>Impossible de charger les entrées d&apos;agenda</label>
+        <name>LEC_Could_Not_Load_Calendar</name>
+    </customLabels>
+    <customLabels>
+        <label>Impossible de charger les entrées d&apos;agenda</label>
+        <name>LEC_Could_Not_Load_Calendar_Entries</name>
+    </customLabels>
+    <customLabels>
+        <label>Impossible de charger les principales bibliothèques JavaScript</label>
+        <name>LEC_Could_Not_Load_Main_JavaScript_Libraries</name>
+    </customLabels>
+    <customLabels>
+        <label>Impossible de charger les bibliothèques JavaScript supplémentaires</label>
+        <name>LEC_Could_Not_Load_Supplemental_JavaScript_Libraries</name>
+    </customLabels>
+    <customLabels>
+        <label>Impossible de mettre à jour l&apos;entrée d&apos;agenda</label>
+        <name>LEC_Could_Not_Update_Calendar_Entry</name>
+    </customLabels>
+    <customLabels>
+        <label>Créer une nouvelle entrée de calendrier</label>
+        <name>LEC_Create_New_Calendar_Entry</name>
+    </customLabels>
+    <customLabels>
+        <label>Créer une Nouvelle Entrée de Calendrier</label>
+        <name>LEC_Create_New_Calendar_Entry_Modal_Header</name>
+    </customLabels>
+    <customLabels>
+        <label>Effacer</label>
+        <name>LEC_Delete</name>
+    </customLabels>
+    <customLabels>
+        <label>Durée</label>
+        <name>LEC_Duration</name>
+    </customLabels>
+    <customLabels>
+        <label>Obtenir de l&apos;Information</label>
+        <name>LEC_Get_Information_Modal_Header</name>
+    </customLabels>
+    <customLabels>
+        <label>Aller à l&apos;entrée du calendrier</label>
+        <name>LEC_Go_To_Calendar_Entry</name>
+    </customLabels>
+    <customLabels>
+        <label>Aller à ce jour</label>
+        <name>LEC_Go_To_Date</name>
+    </customLabels>
+    <customLabels>
+        <label>Aller à la page suivante</label>
+        <name>LEC_Go_To_Next_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>Aller à la page précédente</label>
+        <name>LEC_Go_To_Previous_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>Aller à la page d&apos;aujourd&apos;hui</label>
+        <name>LEC_Go_To_Todays_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>doit être antérieur à</label>
+        <name>LEC_Must_Be_Earlier_Than</name>
+    </customLabels>
+    <customLabels>
+        <label>Nouvelle</label>
+        <name>LEC_New</name>
+    </customLabels>
+    <customLabels>
+        <label>Veuillez sélectionner le type d&apos;entrée d&apos;agenda</label>
+        <name>LEC_Please_Select_Calendar_Entry_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Gagner</label>
+        <name>LEC_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>Aujourd&apos;hui</label>
+        <name>LEC_Today</name>
+    </customLabels>
+    <customLabels>
+        <label>Basculer l&apos;affichage du calendrier</label>
+        <name>LEC_Toggle_Calendar_View</name>
+    </customLabels>
+    <customLabels>
+        <label>Basculer la vue du jour</label>
+        <name>LEC_Toggle_Day_View</name>
+    </customLabels>
+    <customLabels>
+        <label>Basculer l&apos;affichage de la liste</label>
+        <name>LEC_Toggle_List_View</name>
+    </customLabels>
+    <customLabels>
+        <label>Basculer la vue mensuelle</label>
+        <name>LEC_Toggle_Month_View</name>
+    </customLabels>
+    <customLabels>
+        <label>Basculer l&apos;affichage de la chronologie</label>
+        <name>LEC_Toggle_Timeline_View</name>
+    </customLabels>
+    <customLabels>
+        <label>Basculer la vue de la semaine</label>
+        <name>LEC_Toggle_Week_View</name>
+    </customLabels>
+    <customLabels>
+        <label>Basculer la vue de l&apos;année</label>
+        <name>LEC_Toggle_Year_View</name>
+    </customLabels>
+    <customLabels>
+        <label>Genre</label>
+        <name>LEC_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Mettre à Jour l&apos;Entrée du Calendrier</label>
+        <name>LEC_Update_Calendar_Entry_Modal_Header</name>
+    </customLabels>
+    <customTabs>
+        <label><!-- Lightning Enhanced Calendar --></label>
+        <name>Lightning_Enhanced_Calendar</name>
+    </customTabs>
+</Translations>

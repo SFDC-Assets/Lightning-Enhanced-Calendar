@@ -1,0 +1,26 @@
+{
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "default": true,
+      "package": "Lightning Enhanced Calendar",
+      "versionName": "Version 1.0.0.0",
+      "versionNumber": "1.0.0.0",
+      "unpackagedMetadata": {
+        "path": "force-development-unpackaged"
+      },
+      "versionDescription": "This package contains code and metadata for a Salesforce Lightning Web Component that displays, creates, updates, and deletes records of arbitrary object types in a calendar."
+    },
+    {
+      "path": "force-development-unpackaged",
+      "default": false
+    }
+  ],
+  "namespace": "",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "57.0",
+  "packageAliases": {
+    "Lightning Enhanced Calendar": "0Ho2E000000XZHcSAO",
+    "Lightning Enhanced Calendar@1.0.0": "04t2E000003smqjQAA"
+  }
+}
