@@ -66,7 +66,7 @@ Each object has the following keys:
 - **filter**: (optional) a optional [Salesforce SOQL WHERE clause expression](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_select_conditionexpression.htm) specifying which records to return. If the component is on a Lightning Record Page, you may use `:recordId` in the expression to reference the record Id of the page being displayed.
 - **color**: (optional) a CSS-compatible color representation of the records of this object in the display.
 
-**IMPORTANT**: Each key and value in the `Objects` string *MUST* be surrounded in double-quotes.
+**IMPORTANT**: Each key and each value in the `Objects` string *MUST* be surrounded in double-quotes.
 
 ## Internationalization
 
