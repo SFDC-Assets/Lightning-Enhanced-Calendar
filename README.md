@@ -74,7 +74,7 @@ Each object has the following keys:
 
 ## Using the Component
 
-I hope that once the component is configured properly in Lightning App Builder, I hope using it will be fairly intuitive.
+I hope that once the component is configured properly in Lightning App Builder, using it will be fairly intuitive.
 
 ### Viewing a Calendar Entry
 
@@ -102,7 +102,7 @@ To update an existing calendar entry, simply grab the entry on the calendar and 
 
 ![Delete a Calendar Entry](images/Delete_Calendar_Entry.png)
 
-To delete a calendar entry, simply click on the entry to bring up an information dialog. Click on the "Delete" button and, after a confirmation message, the calendar entry and correponding Salesforce record will be removed.
+To delete a calendar entry, simply click on the entry to bring up an information dialog. Click on the "Delete" button and, after a confirmation message, the calendar entry and corresponding Salesforce record will be removed.
 
 ## Internationalization
 
@@ -119,13 +119,19 @@ If you create a scratch org testbed environment using the included `CreateScratc
 - The [FullCalendar library](https://fullcalendar.io) version used by this package is 4.3.1, the most recent of the 4.*x* generation, which is (according to several Internet posts at the time of this writing) the last version that works and plays well with the Salesforce Lightning Web Components framework. One day if I have time before I retire, I may try to get things working with a more recent version, but it's not high on my priority list and 4.3.1 does everything I need it to.
 - Although the FullCalendar library can handle all-day and repeating events, the LWC does not provide any interface for managing them.
 - The calendar may not display on first load even though no errors are displayed. I believe this is due to a race condition somewhere in loading the FullCalendar JavaScript libraries, but have not been able to locate the problem. A page refresh (or two) usually fixes the problem.
-- Since the `filter` key of the `Objects` configuration variable is quite literally a [SOQL injection](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/pages_security_tips_soql_injection.htm), I do not take any defensive action against SOQL injection. If you have opinions about that, please re-read the section below about how this code is meant to help my Salesforce colleagues do customer demonstrations as easily as they can and how this code, as delivered, is not ready for production use. That's why it's licensed under the [BSD 3-Clause](./License.md) license. By all means, take whatever steps you need to secure it if you wish to deploy it to a production environment.
+- Since the `filter` key of the `Objects` configuration variable is quite literally a [SOQL injection](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/pages_security_tips_soql_injection.htm), I do not take any defensive action against SOQL injection. If you have opinions about that, please re-read the section below about how this code is meant to help my Salesforce colleagues do customer demonstrations as easily as they can and how this code, as delivered, is not ready for production use. That's why it's licensed under the BSD 3-Clause license. By all means, take whatever steps you need to secure it if you wish to deploy it to a production environment.
 
 ## Troubleshooting
 
 - **The component will not install**: You must have Translation Workbench enabled in the target org with English, German, French, and Spanish activated. If you are getting other errors, try pulling down the "Advanced Options" twisty on the Salesforce installer page and select "Compile only the Apex in the package".
 - **The component does not display on the page**: If a page refresh (or two) does not fix the problem, make sure you have assigned the `Lightning Enhanced Calendar` permission set to the current user.
 - **The component is complaining that my Objects configuration variable is corrupt**: Please double-check your JSON string. The keys must be entered *exactly* as shown (upper- and lower-case is important). Keys and values *must* be surrounded by double-quotes("). Also, the string must represent an array, even if there is only one object to display.
+
+## Licensing
+
+All of the Salesforce code and metadata in this repository are licensed under the BSD 3-Clause open source license. That basically means that you may freely copy, use, and modify the code and do whatever you want with it, as long as you don't expect to get any support from Salesforce or me. Use and installation of the components are completely at your own risk. Please see the **Caveats** section above before you deploy it into any production environments.
+
+The FullCalendar library, however, is licensed differently. Unless you are using it with an open source project (as I am), you must license the code from FullCalendar. This package makes use of several premium features. Please see [FullCalendar's licensing page](https://fullcalendar.io/license) for details.
 
 ## How to Deploy This Package to Your Org
 
