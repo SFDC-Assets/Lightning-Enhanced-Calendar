@@ -23,19 +23,19 @@ Read the disclaimer below and click on one of the **Install the Package** links.
 
 ![Package Installation](images/Package_Installation.png)
 
-Once the package is installed, you will need to create a Lightning app, home, or record page with the Lightning App Builder and drag the `Lightning Enhanced Calendar` custom component onto the page. If you are using `CreateScratchOrg` to create a scratch org, a Lightning App Page called `Lightning Enhanced Calendar` will already be in the scratch org.
+Once the package is installed, you will need to create a Lightning app, home, or record page with the Lightning App Builder and drag the `Lightning Enhanced Calendar` custom component onto the page.
 
 Finally, you must assign the `Lightning Enhanced Calendar` permission set to anyone who will be using the component.
 
 ### Testing in a Stand-Alone Scratch Org
 
-If you want to test the package in a scratch org using the [Salesforce Command-Line Interface (CLI)](https://developer.salesforce.com/tools/sfdxcli), there is a script in the `scripts` top-level directory called `CreateScratchOrg` that can be run from that top-level directory to create a new scratch org, install all of the components, create the testbed environment with a Lightning app page, and assign all the permission sets. You must authorize a Dev Hub org before you can run this script.
+If you want to test the package in a scratch org using the [Salesforce Command-Line Interface (CLI)](https://developer.salesforce.com/tools/sfdxcli), there is a script called `scripts/CreateScratchOrg` that can be run from the top-level directory to create a new scratch org, install all of the components, create the testbed environment with a Lightning app page, and assign all the required permission sets to the default user. You must authorize a Dev Hub org before you can run this script.
 
 ## Configuration
 
 ![Installation and Configuration](images/Installation_and_Configuration.png)
 
-Once the component is dragged on the desired page in Lightning App Builder, it will be initially configured to display only records from the standard `Event` object. The following configuration variables are exposed to the Lightning App Builder and Experience Builder:
+Once the component is dragged on the desired page in Lightning App Builder, it will be configured initially to display only records from the standard `Event` object. The following configuration variables are exposed to the Lightning App Builder and Experience Builder:
 
 - **Card Title**: The title on the Lightning Card (default: "Calendar")
 - **Default Calendar Duration**: The duration (day, week, month, or year) that is loaded into the calendar when it first displays.
@@ -64,13 +64,13 @@ Each JSON array in the `Objects` configuration string must look like this:
 
 Each object has the following keys:
 
-- **objectApiName**: (mandatory) the API name of the object whose records are to be displayed.
-- **startApiName**: (mandatory) the API name of the `DateTime` field representing the start date and time of the record to be displayed.
-- **endApiName**: (mandatory) the API name of the `DateTime` field representing the end date and time of the record to be displayed.
-- **filter**: (optional) a optional [Salesforce SOQL WHERE clause expression](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_select_conditionexpression.htm) specifying which records to return. If the component is on a Lightning Record Page, you may use `:recordId` in the expression to reference the record Id of the page being displayed.
-- **color**: (optional) a CSS-compatible color representation of the records of this object in the display.
+- **objectApiName**: (*mandatory*) the API name of the object whose records are to be displayed.
+- **startApiName**: (*mandatory*) the API name of the `DateTime` field representing the start date and time of the record to be displayed.
+- **endApiName**: (*mandatory*) the API name of the `DateTime` field representing the end date and time of the record to be displayed.
+- **filter**: (*optional*) an optional [Salesforce SOQL WHERE clause expression](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_select_conditionexpression.htm) specifying which records of the given object to return. If the component is on a Lightning Record Page, you may use `:recordId` in the expression to reference the record Id of the page being displayed.
+- **color**: (*optional*) a CSS-compatible color representation of the records of this object in the display.
 
-**IMPORTANT**: Each key and each value in the `Objects` string *MUST* be surrounded in double-quotes (").
+**IMPORTANT**: Each key and each value in the `Objects` string *MUST* be surrounded by double-quotes (").
 
 ## Internationalization
 
@@ -78,7 +78,7 @@ The component includes display labels and toast messages for English, Spanish, F
 
 ## Bonus Component: Lightning Enhanced Calendar Dynamic Interaction Tester
 
-I have included an additional component that will intercept and display calendar entry creation, update, and deletion events from Lightning Enhanced Calendar using [Lightning Dynamic Interactions](https://admin.salesforce.com/blog/2021/introducing-dynamic-interactions-the-latest-low-code-innovation-for-salesforce-platform). At the time of this writing, however, these are only available in Lightning App pages.
+I have included an additional component that will intercept and display calendar entry creation, update, and deletion events from Lightning Enhanced Calendar using [Lightning Dynamic Interactions](https://admin.salesforce.com/blog/2021/introducing-dynamic-interactions-the-latest-low-code-innovation-for-salesforce-platform). At the time of this writing, however, these are only available in Lightning App pages. The component is there to (1) demonstrate how a component can be written and configured in Lightning App Builder to respond to calendar update events from Lightning Enhanced Calendar and (2) to test the LWC code.
 
 If you create a scratch org testbed environment using the included `CreateScratchOrg` script, the `Lightning Enhanced Calendar` app page will be set up with this component already properly configured.
 
@@ -87,10 +87,11 @@ If you create a scratch org testbed environment using the included `CreateScratc
 - The component does not handle all-day or repeating events.
 - The calendar may not display on first load even though no errors are displayed. I believe this is due to a race condition somewhere in loading the FullCalendar JavaScript libraries, but have not been able to locate the problem. A page refresh (or two) usually fixes the problem.
 - The [FullCalendar library](https://fullcalendar.io) version used by this package is 4.3.1, the latest of the 4.*x* generation, which is (according to several Internet posts at the time of this writing) the last version that works and plays well with the Salesforce Lightning Web Components framework. Fortunately, it does everything I need it to do.
+- Since the `filter` key of the `Objects` configuration variable is quite literally a [SOQL injection](https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/pages_security_tips_soql_injection.htm), I do not take any defensive action against SOQL injection. If you have opinions about that, please re-read the section below about how this code is meant to help my Salesforce colleagues do customer demos as easily as they can and how this code, as delivered, is not ready for production use. That's why it's licensed under the [BSD 3-Clause](./License.md) license. By all means, take whatever steps you need to secure it if you wish to deploy it in a production environment.
 
 ## Troubleshooting
 
-- **The component will not install**: You must have Translation Workbench enabled in the target org with English, German, French, and Spanish activated. If you are getting other errors, try ulling down the "Advanced Options" twisty on the Salesforce installer page and select "Compile only the Apex in the package".
+- **The component will not install**: You must have Translation Workbench enabled in the target org with English, German, French, and Spanish activated. If you are getting other errors, try pulling down the "Advanced Options" twisty on the Salesforce installer page and select "Compile only the Apex in the package".
 - **The component does not display on the page**: If a page refresh (or two) does not fix the problem, make sure you have assigned the `Lightning Enhanced Calendar` permission set to the current user.
 - **The component is complaining that my Objects configuration variable is corrupt**: Please double-check your JSON string. The keys must be entered *exactly* as shown (upper- and lower-case is important). Keys and values *must* be surrounded by double-quotes("). Also, the string must represent an array, even if there is only one object to display.
 
