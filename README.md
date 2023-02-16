@@ -27,7 +27,7 @@ Once the package is deployed, you will need to create a Lightning app or record 
 
 Finally, you must assign the `Lightning Enhanced Calendar` permission set to anyone who will be using the component.
 
-![Installation and Configuration](images/Installation_and_Configuration)
+![Installation and Configuration](images/Installation_and_Configuration.png)
 
 Once on the component is dragged on the page in Lightning App Builder, it will be configured to display only records from the standard `Event` object. The following configuration variables are exposed to the Lightning App Builder and Experience Builder:
 
@@ -84,9 +84,9 @@ I have included an additional component that will intercept and display calendar
 
 ## Troubleshooting
 
-- *The component will not install*: You must have Translation Workbench enabled with English, German, French, and Spanish activated. If you are getting other errors, try selecting 
-- *The component does not display on the page*: I a page refresh (or two) does not fix the problem, make sure you have assigned the `Lightning Enhanced Calendar` permission set to the current user.
-- *The component is complaining that my Objects configuration variable is corrupt*: Please double-check your JSON string. The keys must be entered *exactly* as shown (upper- and lower-case is important). Keys and values *must* be surrounded by double-quotes(").
+- **The component will not install**: You must have Translation Workbench enabled with English, German, French, and Spanish activated. If you are getting other errors, try selecting 
+- **The component does not display on the page**: I a page refresh (or two) does not fix the problem, make sure you have assigned the `Lightning Enhanced Calendar` permission set to the current user.
+- **The component is complaining that my Objects configuration variable is corrupt**: Please double-check your JSON string. The keys must be entered *exactly* as shown (upper- and lower-case is important). Keys and values *must* be surrounded by double-quotes(").
 
 ## How to Deploy This Package to Your Org
 
@@ -104,6 +104,6 @@ John Meyer, Salesforce Solution Engineer
 
 ## References
 
-[Mark Lott's Component](https://github.com/markslott/lwc-fullcalendar): thanks to Mark for finding and making the minor tweak necessary in the `main.js` file to make the FullCalendar library work with Lightning.
-[Year View](https://github.com/p-try/fullcalendar-yearview): I never could get this to work with Lightning, but I find it intriguing nonetheless.
-[AuraEnabled](https://auraenabled.com/2020/07/fullcalendar-in-lightning-web-component/): inspiration
+- [Mark Lott's Component](https://github.com/markslott/lwc-fullcalendar): thanks to Mark for finding and making the minor tweak necessary in the `main.js` file to make the FullCalendar library work with Lightning.
+- [Year View](https://github.com/p-try/fullcalendar-yearview): I never could get this to work with Lightning, but I find it intriguing nonetheless.
+- [AuraEnabled](https://auraenabled.com/2020/07/fullcalendar-in-lightning-web-component/): inspiration
