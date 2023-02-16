@@ -45,7 +45,7 @@ public with sharing class LightningEnhancedCalendar {
 
             this.objectApiName = objectApiName;
             this.objectLabel = sor.getLabel();
-            this.nameFieldApiName = getNameField(objectApiName);
+            this.nameFieldApiName = getNameField(fields);
             this.nameFieldLabel = fields.get(this.nameFieldApiName)?.getDescribe().getLabel();
             this.startApiName = startApiName;
             this.startLabel = fields.get(startApiName)?.getDescribe().getLabel();
@@ -126,9 +126,9 @@ public with sharing class LightningEnhancedCalendar {
     //  The parameter represents:
     //      objectApiName:  the API name of the object whose name field is wanted.
 
-    private static String getNameField (String objectApiName) {
+    private static String getNameField (Map<String,Schema.SObjectField> fields) {
         String nameFieldApiName;
-        for (Schema.SObjectField field : Schema.describeSObjects(new List<String> {objectApiName})[0].fields.getMap().values()) {
+        for (Schema.SObjectField field : fields.values()) {
             if (field.getDescribe().isNameField()) {
                 nameFieldApiName = field.getDescribe().getName();
                 break;
