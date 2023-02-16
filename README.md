@@ -76,6 +76,12 @@ Each object has the following keys:
 
 I hope that once the component is configured properly in Lightning App Builder, I hope using it will be fairly intuitive.
 
+### Viewing a Calendar Entry
+
+![View a Calendar Entry](images/Delete_Calendar_Entry.png)
+
+To view details of a calendar entry, simply click on the entry in the calendar. You will see the title and the start and end dates for that entry. To see all of the fields in the calendar entry, click on the "Go to Calendar Entry" button and you will be taken to a new tab showing all of the details of that entry.
+
 ### Creating a New Calendar Entry
 
 ![Creating a New Entry](images/Create_Calendar_Entry.png)
