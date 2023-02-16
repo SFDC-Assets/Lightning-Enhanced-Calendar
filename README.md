@@ -29,7 +29,7 @@ Finally, you must assign the `Lightning Enhanced Calendar` permission set to any
 
 ### Testing in a Stand-Alone Scratch Org
 
-If you want to test the package in a scratch org using the [Salesforce Command-Line Interface (CLI)](https://developer.salesforce.com/tools/sfdxcli), there is a script called `scripts/CreateScratchOrg` that can be run from the top-level directory to create a new scratch org, install all of the components, create the testbed environment with a Lightning app page, and assign all the required permission sets to the default user. You must authorize a Dev Hub org before you can run this script.
+If you want to test the package in a scratch org using the [Salesforce Command-Line Interface (CLI)](https://developer.salesforce.com/tools/sfdxcli), there is a script called `scripts/CreateScratchOrg` that can be run from the top-level directory that will create a new scratch org, install all of the components, create the testbed environment with a Lightning app page, and assign all the required permission sets to the default user. You must authorize a Dev Hub org before you can run this script.
 
 ## Configuration
 
@@ -67,7 +67,7 @@ Each object has the following keys:
 - **objectApiName**: (*mandatory*) the API name of the object whose records are to be displayed.
 - **startApiName**: (*mandatory*) the API name of the `DateTime` field representing the start date and time of the record to be displayed.
 - **endApiName**: (*mandatory*) the API name of the `DateTime` field representing the end date and time of the record to be displayed.
-- **filter**: (*optional*) an optional [Salesforce SOQL WHERE clause expression](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_select_conditionexpression.htm) specifying which records of the given object to return. If the component is on a Lightning Record Page, you may use `:recordId` in the expression to reference the record Id of the page being displayed.
+- **filter**: (*optional*) an optional [Salesforce SOQL WHERE clause expression](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_select_conditionexpression.htm) specifying which records of the given object to return. If the component is on a Lightning Record Page, you may use ```:recordId``` in the expression to reference the record Id of the page being displayed. This can be useful to restrict displayed calendar entries to those directly related to the displayed record, for example: ```"filter": "StartTime__c > 2005-01-01T01:01:00Z AND OwnerId = :recordId"```
 - **color**: (*optional*) a CSS-compatible color representation of the records of this object in the display.
 
 **IMPORTANT**: Each key and each value in the `Objects` string *MUST* be surrounded by double-quotes (").
