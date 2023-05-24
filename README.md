@@ -29,7 +29,7 @@ Finally, you must assign the `Lightning Enhanced Calendar` permission set to any
 
 ### Testing in a Stand-Alone Scratch Org
 
-If you want to test the package in a new scratch org using the [Salesforce Command-Line Interface (CLI)](https://developer.salesforce.com/tools/sfdxcli), there is a script called `scripts/CreateScratchOrg` that can be run from the top-level directory that will create a new scratch org, install all of the components, create the testbed environment with a Lightning app page, generate random calendar entries, and assign all the required permission sets to the default user to make it all work. You must authorize a Dev Hub org before you can run this script.
+If you want to test the package in a new scratch org using the [Salesforce Command-Line Interface (CLI)](https://developer.salesforce.com/tools/sfdxcli), there is a script called `scripts/CreateScratchOrg` that can be run from the top-level directory that will create a new scratch org, install all of the components, create the testbed environment with a Lightning app page, generate random calendar entries, and assign all the required permission sets to the default user to make it all work. You must authorize a Dev Hub org before you can run this script. You must also have [jq](https://github.com/stedolan/jq) installed for this and the other scripts in the ``scripts`` folder to work. If you are lucky enough to develop on a Mac, I highly recommend using [Homebrew](https://brew.sh/) for ``jq`` and many other pre-compiled open source utilities.
 
 ## Configuration
 
