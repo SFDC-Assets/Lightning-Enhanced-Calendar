@@ -4,8 +4,8 @@
       "path": "force-app",
       "default": true,
       "package": "Lightning Enhanced Calendar",
-      "versionName": "Version 1.0.0.0",
-      "versionNumber": "1.0.0.0",
+      "versionName": "Version 1.0.1.0",
+      "versionNumber": "1.0.1.0",
       "unpackagedMetadata": {
         "path": "force-development-unpackaged"
       },
@@ -21,6 +21,7 @@
   "sourceApiVersion": "57.0",
   "packageAliases": {
     "Lightning Enhanced Calendar": "0Ho2E000000XZHcSAO",
-    "Lightning Enhanced Calendar@1.0.0": "04t2E000003smqjQAA"
+    "Lightning Enhanced Calendar@1.0.0": "04t2E000003smqjQAA",
+    "Lightning Enhanced Calendar@1.0.1": "04tHu000003soDFIAY"
   }
 }

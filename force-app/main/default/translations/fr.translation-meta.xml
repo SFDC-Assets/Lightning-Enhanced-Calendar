@@ -113,6 +113,10 @@
         <name>LEC_Go_To_Todays_Page</name>
     </customLabels>
     <customLabels>
+        <label>Aider</label>
+        <name>LEC_Help</name>
+    </customLabels>
+    <customLabels>
         <label>doit être antérieur à</label>
         <name>LEC_Must_Be_Earlier_Than</name>
     </customLabels>
@@ -123,6 +127,14 @@
     <customLabels>
         <label>Veuillez sélectionner le type d&apos;entrée d&apos;agenda</label>
         <name>LEC_Please_Select_Calendar_Entry_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Rafraîchir</label>
+        <name>LEC_Refresh</name>
+    </customLabels>
+    <customLabels>
+        <label>Rafraîchir le calendrier</label>
+        <name>LEC_Refresh_the_Calendar</name>
     </customLabels>
     <customLabels>
         <label>Gagner</label>

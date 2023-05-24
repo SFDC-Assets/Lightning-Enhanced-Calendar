@@ -17,7 +17,7 @@ readonly devHubOrgAlias=$(jq --raw-output .defaultdevhubusername < .sfdx/sfdx-co
 sfdx package version create \
     --definition-file config/project-scratch-def.json \
     --installation-key-bypass \
-    --wait 10 \
+    --wait 20 \
     --path "force-app" \
     --code-coverage \
-    --target-hub-org "$devHubOrgAlias"
+    --target-dev-hub "$devHubOrgAlias"

@@ -20,5 +20,5 @@ sfdx data query \
     --result-format csv \
     --target-org "$devHubOrgAlias" > "$tmpFile"
 echo "*** Deleting all scratch orgs ..."
-sfdx force data delete bulk --file "$tmpFile" --sobject ScratchOrgInfo --wait 10 --target-org "$devHubOrgAlias"
+sfdx force data bulk delete --file "$tmpFile" --sobject ScratchOrgInfo --wait 10 --target-org "$devHubOrgAlias"
 rm -f "$tmpFile"

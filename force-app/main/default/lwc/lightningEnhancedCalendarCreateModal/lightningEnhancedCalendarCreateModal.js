@@ -46,10 +46,11 @@ export default class lightningEnhancedCalendarCreateModal extends LightningModal
 		} else {
 			this.objectList = [];
 			this.objectProperties.forEach((obj) => {
-				this.objectList.push({
-					label: obj.objectLabel,
-					value: obj.objectApiName
-				});
+				if (obj.isCreateable)
+					this.objectList.push({
+						label: obj.objectLabel,
+						value: obj.objectApiName
+					});
 			});
 		}
 	}

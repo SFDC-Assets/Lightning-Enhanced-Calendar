@@ -14,8 +14,7 @@ public with sharing class LightningEnhancedCalendarDurationView extends VisualEd
             new VisualEditor.DataRow('Day View', 'day'),
             new VisualEditor.DataRow('Week View', 'week'),
             new VisualEditor.DataRow('Month View', 'month'),
-            new VisualEditor.DataRow('Year View', 'year'),
-            new VisualEditor.DataRow('Timeline View', 'gantt')
+            new VisualEditor.DataRow('Year View', 'year')
         },
         true
     );

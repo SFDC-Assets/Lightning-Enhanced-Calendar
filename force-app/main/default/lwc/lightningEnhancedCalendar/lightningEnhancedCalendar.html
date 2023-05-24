@@ -15,18 +15,32 @@
 		</template>
 		<header slot="actions">
 			<lightning-button-group>
+				<template lwc:if={showNewButton}>
+					<lightning-button
+						variant="neutral"
+						label={labels.NEW_LABEL}
+						icon-name="utility:add"
+						alternative-text={labels.CREATE_NEW_CALENDAR_ENTRY}
+						title={labels.CREATE_NEW_CALENDAR_ENTRY}
+						onclick={handleNewEvent}
+					></lightning-button>
+				</template>
 				<lightning-button
-					label={labels.NEW_LABEL}
-					icon-name="utility:add"
-					title={labels.CREATE_NEW_CALENDAR_ENTRY}
-					onclick={handleNewEvent}
+					variant="neutral"
+					label={labels.REFRESH}
+					icon-name="utility:refresh"
+					alternative-text={labels.REFRESH_THE_CALENDAR}
+					title={labels.REFRESH_THE_CALENDAR}
+					onclick={initializeCalendar}
 				></lightning-button>
-				<lightning-button-icon
+				<lightning-button
+					variant="neutral"
+					label={labels.HELP}
 					icon-name="utility:info"
 					alternative-text={labels.ABOUT_LIGHTNING_ENHANCED_CALENDAR}
 					title={labels.ABOUT_LIGHTNING_ENHANCED_CALENDAR}
 					onclick={handleAboutModal}
-				></lightning-button-icon>
+				></lightning-button>
 			</lightning-button-group>
 		</header>
 		<div class="slds-p-horizontal_medium">

@@ -27,7 +27,10 @@ import COULD_NOT_GET_CALENDAR_ENTRIES_FOR from '@salesforce/label/c.LEC_Could_No
 import COULD_NOT_LOAD_CALENDAR_ENTRIES from '@salesforce/label/c.LEC_Could_Not_Load_Calendar_Entries';
 import NEW_LABEL from '@salesforce/label/c.LEC_New';
 import CREATE_NEW_CALENDAR_ENTRY from '@salesforce/label/c.LEC_Create_New_Calendar_Entry';
+import HELP from '@salesforce/label/c.LEC_Help';
 import ABOUT_LIGHTNING_ENHANCED_CALENDAR from '@salesforce/label/c.LEC_About_Lightning_Enhanced_Calendar';
+import REFRESH from '@salesforce/label/c.LEC_Refresh';
+import REFRESH_THE_CALENDAR from '@salesforce/label/c.LEC_Refresh_the_Calendar';
 import TOGGLE_DAY_VIEW from '@salesforce/label/c.LEC_Toggle_Day_View';
 import TOGGLE_WEEK_VIEW from '@salesforce/label/c.LEC_Toggle_Week_View';
 import TOGGLE_MONTH_VIEW from '@salesforce/label/c.LEC_Toggle_Month_View';
@@ -70,7 +73,10 @@ export default class LightningEnhancedCalendar extends NavigationMixin(Lightning
 
 	labels = {
 		NEW_LABEL,
+		HELP,
 		ABOUT_LIGHTNING_ENHANCED_CALENDAR,
+		REFRESH,
+		REFRESH_THE_CALENDAR,
 		CREATE_NEW_CALENDAR_ENTRY,
 		TOGGLE_DAY_VIEW,
 		TOGGLE_WEEK_VIEW,
@@ -97,6 +103,8 @@ export default class LightningEnhancedCalendar extends NavigationMixin(Lightning
 
 	jsInitialized = false;
 
+	firstRender = true;
+
 	selectedDuration;
 	@track durations = {
 		day: { selected: false, variant: 'neutral' },
@@ -112,6 +120,10 @@ export default class LightningEnhancedCalendar extends NavigationMixin(Lightning
 	};
 
 	objectProperties = [];
+
+	get showNewButton() {
+		return this.objectProperties.reduce((createable, calObject) => createable || calObject.isCreateable, false);
+	}
 
 	connectedCallback() {
 		this.addEventListener('fcnewdraggedevent', this.handleNewDraggedEvent.bind(this));
@@ -210,6 +222,7 @@ export default class LightningEnhancedCalendar extends NavigationMixin(Lightning
 								startLabel: calObject.startLabel,
 								endApiName: calObject.endApiName,
 								endLabel: calObject.endLabel,
+								isCreateable: calObject.isCreateable,
 								color: calObject.color
 							});
 							calObject.events.forEach((calEvent) => {
@@ -226,77 +239,80 @@ export default class LightningEnhancedCalendar extends NavigationMixin(Lightning
 							});
 						}
 					});
-					this.calendar = new FullCalendar.Calendar(this.refs.calendar, {
-						schedulerLicenseKey: this.licenseKey,
-						plugins: ['dayGrid', 'timeGrid', 'list', 'interaction', 'moment', 'timeline'],
-						views: {
-							timelineWeek: {
-								slotDuration: { minutes: 360 }
-							},
-							timeGridDay: {
-								allDaySlot: false
-							},
-							timeGridWeek: {
-								allDaySlot: false
-							},
-							timelineYear: {
-								type: 'timeline',
-								dateIncrement: { years: 1 },
-								slotDuration: { months: 1 },
-								visibleRange: (currentDate) => {
-									return {
-										start: currentDate.clone().startOf('year'),
-										end: currentDate.clone().endOf('year')
-									};
+					if (this.firstRender) {
+						this.calendar = new FullCalendar.Calendar(this.refs.calendar, {
+							schedulerLicenseKey: this.licenseKey,
+							plugins: ['dayGrid', 'timeGrid', 'list', 'interaction', 'moment', 'timeline'],
+							views: {
+								timelineWeek: {
+									slotDuration: { minutes: 360 }
+								},
+								timeGridDay: {
+									allDaySlot: false
+								},
+								timeGridWeek: {
+									allDaySlot: false
+								},
+								timelineYear: {
+									type: 'timeline',
+									dateIncrement: { years: 1 },
+									slotDuration: { months: 1 },
+									visibleRange: (currentDate) => {
+										return {
+											start: currentDate.clone().startOf('year'),
+											end: currentDate.clone().endOf('year')
+										};
+									}
 								}
-							}
-						},
-						defaultView: VIEWS[this.selectedDuration][this.selectedType],
-						titleFormat: {
-							month: 'long',
-							year: 'numeric',
-							day: 'numeric'
-						},
-						eventTimeFormat: {
-							hour: 'numeric',
-							minute: '2-digit',
-							meridiem: 'short'
-						},
-						nowIndicator: true,
-						editable: true,
-						selectable: true,
-						weekNumbers: this.showWeekNumbers,
-						select: (info) => {
-							this.dispatchEvent(
-								new CustomEvent('fcnewdraggedevent', {
-									detail: info
-								})
-							);
-						},
-						eventClick: (info) => {
-							this.dispatchEvent(
-								new CustomEvent('fceventclick', {
-									detail: info
-								})
-							);
-						},
-						eventDrop: (info) => {
-							this.dispatchEvent(
-								new CustomEvent('fceventdrop', {
-									detail: info
-								})
-							);
-						},
-						eventResize: (info) => {
-							this.dispatchEvent(
-								new CustomEvent('fceventresize', {
-									detail: info
-								})
-							);
-						},
-						header: false,
-						events: this.events
-					});
+							},
+							defaultView: VIEWS[this.selectedDuration][this.selectedType],
+							titleFormat: {
+								month: 'long',
+								year: 'numeric',
+								day: 'numeric'
+							},
+							eventTimeFormat: {
+								hour: 'numeric',
+								minute: '2-digit',
+								meridiem: 'short'
+							},
+							nowIndicator: true,
+							editable: true,
+							selectable: true,
+							weekNumbers: this.showWeekNumbers,
+							select: (info) => {
+								this.dispatchEvent(
+									new CustomEvent('fcnewdraggedevent', {
+										detail: info
+									})
+								);
+							},
+							eventClick: (info) => {
+								this.dispatchEvent(
+									new CustomEvent('fceventclick', {
+										detail: info
+									})
+								);
+							},
+							eventDrop: (info) => {
+								this.dispatchEvent(
+									new CustomEvent('fceventdrop', {
+										detail: info
+									})
+								);
+							},
+							eventResize: (info) => {
+								this.dispatchEvent(
+									new CustomEvent('fceventresize', {
+										detail: info
+									})
+								);
+							},
+							header: false,
+							events: this.events
+						});
+						this.firstRender = false;
+					}
 					this.calendar.render();
 					this.calendarTitle = this.calendar.view.title;
 				}

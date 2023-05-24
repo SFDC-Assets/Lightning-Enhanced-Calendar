@@ -16,6 +16,7 @@ public with sharing class LightningEnhancedCalendar {
 
     private class ObjectListItem {
         private String objectApiName;
+        private String customLabel;
         private String startApiName;
         private String endApiName;
         private String filter;
@@ -33,32 +34,35 @@ public with sharing class LightningEnhancedCalendar {
         @AuraEnabled public String startLabel;
         @AuraEnabled public String endApiName;
         @AuraEnabled public String endLabel;
-        @AuraEnabled public List<CalendarEvent> events;
+        @AuraEnabled public Boolean isCreateable;
+        @AuraEnabled public List<CalendarEntry> events;
         @AuraEnabled public String color;
         @AuraEnabled public Boolean error;
         @AuraEnabled public String errorMsg;
 
-        public CalendarObject(String objectApiName, String startApiName, String endApiName) {
+        @SuppressWarnings('PMD.ExcessiveParameterList')
+        public CalendarObject(String objectApiName, String customLabel, String startApiName, String endApiName) {
             
-            Schema.DescribeSObjectResult sor = Schema.getGlobalDescribe().get(objectApiName).getDescribe();
-            Map<String,Schema.SObjectField> fields = sor.fields.getMap();
+            Schema.DescribeSObjectResult dsor = Schema.getGlobalDescribe().get(objectApiName).getDescribe();
+            Map<String,Schema.SObjectField> fields = dsor.fields.getMap();
 
             this.objectApiName = objectApiName;
-            this.objectLabel = sor.getLabel();
-            this.nameFieldApiName = getNameField(fields);
+            this.objectLabel = customLabel == null ? dsor.getLabel() : customLabel;
+            this.nameFieldApiName = getNameField(fields.values());
             this.nameFieldLabel = fields.get(this.nameFieldApiName)?.getDescribe().getLabel();
             this.startApiName = startApiName;
             this.startLabel = fields.get(startApiName)?.getDescribe().getLabel();
             this.endApiName = endApiName;
             this.endLabel = fields.get(endApiName)?.getDescribe().getLabel();
-            this.events = new List<CalendarEvent>();
+            this.isCreateable = isCreateable(fields, startApiName, endApiName);
+            this.events = new List<CalendarEntry>();
             this.error = false;
             this.errorMsg = null;
             this.color = DEFAULT_COLOR;
         }
     }
 
-    public class CalendarEvent {
+    public class CalendarEntry {
         @AuraEnabled public String objectApiName;
         @AuraEnabled public String title;
         @AuraEnabled public DateTime startTime;
@@ -66,7 +70,7 @@ public with sharing class LightningEnhancedCalendar {
         @AuraEnabled public Id id;
 
         @SuppressWarnings('PMD.ExcessiveParameterList')
-        public CalendarEvent (String objectApiName, String title, DateTime startTime, DateTime endTime, Id id) {
+        public CalendarEntry (String objectApiName, String title, DateTime startTime, DateTime endTime, Id id) {
             this.objectApiName = objectApiName;
             this.title = title;
             this.startTime = startTime;
@@ -76,7 +80,7 @@ public with sharing class LightningEnhancedCalendar {
     }
 
 
-    //  Retrieves the list of events to display on the calendar.
+    //  Retrieves the list of entries to display on the calendar.
     //
     //  The parameters represent:
     //      objectsString:  A JSON string that will be deserialized into a list of ObjectListItem objects. Each item must contain:
@@ -95,46 +99,67 @@ public with sharing class LightningEnhancedCalendar {
 
         List<CalendarObject> eventRecords = new List<CalendarObject>();
         for (ObjectListItem item : objects) {
-            CalendarObject co = new CalendarObject(item.objectApiName, item.startApiName, item.endApiName);
+            CalendarObject calObject = new CalendarObject(item.objectApiName, item.customLabel, item.startApiName, item.endApiName);
             try {
                 for (SObject record : Database.query(
-                        'SELECT ' + co.nameFieldApiName + ',' + item.startApiName + ',' + item.endApiName + ' FROM ' + item.objectApiName +
+                        'SELECT ' + calObject.nameFieldApiName + ',' + item.startApiName + ',' + item.endApiName + ' FROM ' + item.objectApiName +
                         (item.filter == null ? '' : ' WHERE (' + item.filter + ')')
                     )) {
-                    co.events.add(new CalendarEvent(
+                    calObject.events.add(new CalendarEntry(
                         item.objectApiName,
-                        (String) record.get(co.nameFieldApiName),
+                        (String) record.get(calObject.nameFieldApiName),
                         (DateTime) record.get(item.startApiName),
                         (DateTime) record.get(item.endApiName),
                         (Id) record.get('Id')
                     ));
                 }
-                co.color = item.color == null ? DEFAULT_COLOR : item.color;
+                calObject.color = item.color == null ? DEFAULT_COLOR : item.color;
             } catch (QueryException e) {
-                co.error = true;
-                co.errorMsg = e.getMessage();
+                calObject.error = true;
+                calObject.errorMsg = e.getMessage();
             }
-            eventRecords.add(co);
+            eventRecords.add(calObject);
         }
 
         return eventRecords;
     }
 
 
-    //  Find the name field for an object.
+    //  Returns the API name for the name field of the object.
     //
     //  The parameter represents:
-    //      objectApiName:  the API name of the object whose name field is wanted.
+    //      fields: a list of SObjectFields to interrogate
 
-    private static String getNameField (Map<String,Schema.SObjectField> fields) {
+    private static String getNameField (List<Schema.SObjectField> fields) {
         String nameFieldApiName;
-        for (Schema.SObjectField field : fields.values()) {
+        for (Schema.SObjectField field : fields) {
             if (field.getDescribe().isNameField()) {
                 nameFieldApiName = field.getDescribe().getName();
                 break;
             }
         }
         return nameFieldApiName;
+    }
+
+
+    //  Returns true if the object is createable, namely, if it does not contain any other required fields besides the start
+    //  and end DateTimes.
+    //
+    //  The parameters represent:
+    //      fields: a map of field names to Schema.SObjectFields
+    //      startApiName:  the API name of the starting DateTime field.
+    //      endApiName:  the API name of the ending DateTime field.
+
+    private static Boolean isCreateable (Map<String,Schema.SObjectField> fields, String startApiName, String endApiName) {
+        for (String field : fields.keySet()) {
+            if (field != startApiName && field != endApiName) {
+                Schema.DescribeFieldResult dfr = fields.get(field).getDescribe();
+                if (dfr.isCreateable() && !dfr.isNillable() && !dfr.isDefaultedOnCreate()) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 
@@ -168,8 +193,8 @@ public with sharing class LightningEnhancedCalendar {
     //  Delete a record from the calendar.
     //
     //  The parameters represent:
-    //      objectApiName:  the API name of the object to update.
-    //      recordId:  the Id of the record to update.
+    //      objectApiName:  the API name of the object.
+    //      recordId:  the Id of the record to delete.
 
     @SuppressWarnings('PMD.ApexSoqlInjection, PMD.ApexCRUDViolation')
     @AuraEnabled

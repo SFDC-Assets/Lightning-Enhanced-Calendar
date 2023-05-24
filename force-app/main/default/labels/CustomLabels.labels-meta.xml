@@ -328,4 +328,28 @@
         <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
         <value>Could not update calendar entry</value>
     </labels>
+    <labels>
+        <fullName>LEC_Help</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Help</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Refresh</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Refresh</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Refresh_the_Calendar</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>Refresh the calendar</value>
+    </labels>
 </CustomLabels>

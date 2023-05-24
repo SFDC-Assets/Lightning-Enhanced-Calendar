@@ -5,8 +5,180 @@
         <name>Lightning_Enhanced_Calendar_Test_Bed</name>
     </customApplications>
     <customLabels>
+        <label>About Lightning Enhanced Calendar</label>
+        <name>LEC_About_Lightning_Enhanced_Calendar</name>
+    </customLabels>
+    <customLabels>
+        <label>Are you sure?</label>
+        <name>LEC_Are_You_Sure</name>
+    </customLabels>
+    <customLabels>
+        <label>The &quot;Objects&quot; configuration variable is corrupt. Please fix it and try again.</label>
+        <name>LEC_Bad_Objects_String</name>
+    </customLabels>
+    <customLabels>
+        <label>Calendar entry successfully created</label>
+        <name>LEC_Calendar_Entry_Successfully_Created</name>
+    </customLabels>
+    <customLabels>
+        <label>Calendar entry successfully deleted</label>
+        <name>LEC_Calendar_Entry_Successfully_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>Calendar entry successfully updated</label>
+        <name>LEC_Calendar_Entry_Successfully_Updated</name>
+    </customLabels>
+    <customLabels>
+        <label>Calendar Entry Type</label>
+        <name>LEC_Calendar_Entry_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Cancel</label>
+        <name>LEC_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label>Close</label>
+        <name>LEC_Close</name>
+    </customLabels>
+    <customLabels>
+        <label>Could not create calendar entry</label>
+        <name>LEC_Could_Not_Create_Calendar_Entry</name>
+    </customLabels>
+    <customLabels>
+        <label>Could not delete calendar entry</label>
+        <name>LEC_Could_Not_Delete_Calendar_Entry</name>
+    </customLabels>
+    <customLabels>
+        <label>Could not get calendar entries for</label>
+        <name>LEC_Could_Not_Get_Calendar_Entries</name>
+    </customLabels>
+    <customLabels>
+        <label>Could not load any calendar entries</label>
+        <name>LEC_Could_Not_Load_Calendar</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Used by Lightning Enhanced Calendar --></label>
+        <name>LEC_Could_Not_Load_Calendar_Entries</name>
+    </customLabels>
+    <customLabels>
+        <label>Could not load main JavaScript libraries</label>
+        <name>LEC_Could_Not_Load_Main_JavaScript_Libraries</name>
+    </customLabels>
+    <customLabels>
+        <label>Could not load supplemental JavaScript libraries</label>
+        <name>LEC_Could_Not_Load_Supplemental_JavaScript_Libraries</name>
+    </customLabels>
+    <customLabels>
+        <label>Could not update calendar entry</label>
+        <name>LEC_Could_Not_Update_Calendar_Entry</name>
+    </customLabels>
+    <customLabels>
+        <label>Create new calendar entry</label>
+        <name>LEC_Create_New_Calendar_Entry</name>
+    </customLabels>
+    <customLabels>
+        <label>Create New Calendar Entry</label>
+        <name>LEC_Create_New_Calendar_Entry_Modal_Header</name>
+    </customLabels>
+    <customLabels>
+        <label>Delete</label>
+        <name>LEC_Delete</name>
+    </customLabels>
+    <customLabels>
+        <label>Duration</label>
+        <name>LEC_Duration</name>
+    </customLabels>
+    <customLabels>
+        <label>Get Information</label>
+        <name>LEC_Get_Information_Modal_Header</name>
+    </customLabels>
+    <customLabels>
+        <label>Go to Calendar Entry</label>
+        <name>LEC_Go_To_Calendar_Entry</name>
+    </customLabels>
+    <customLabels>
+        <label>Go to Date</label>
+        <name>LEC_Go_To_Date</name>
+    </customLabels>
+    <customLabels>
+        <label>Go to next page</label>
+        <name>LEC_Go_To_Next_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>Go to previous page</label>
+        <name>LEC_Go_To_Previous_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>Go to today&apos;s page</label>
+        <name>LEC_Go_To_Todays_Page</name>
+    </customLabels>
+    <customLabels>
+        <label>Help</label>
+        <name>LEC_Help</name>
+    </customLabels>
+    <customLabels>
+        <label>must be earlier than</label>
         <name>LEC_Must_Be_Earlier_Than</name>
+    </customLabels>
+    <customLabels>
+        <label>New</label>
+        <name>LEC_New</name>
+    </customLabels>
+    <customLabels>
+        <label>Please select the type of calendar entry</label>
+        <name>LEC_Please_Select_Calendar_Entry_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Refresh</label>
+        <name>LEC_Refresh</name>
+    </customLabels>
+    <customLabels>
+        <label>Refresh the calendar</label>
+        <name>LEC_Refresh_the_Calendar</name>
+    </customLabels>
+    <customLabels>
+        <label>Save</label>
+        <name>LEC_Save</name>
+    </customLabels>
+    <customLabels>
+        <label>Today</label>
+        <name>LEC_Today</name>
+    </customLabels>
+    <customLabels>
+        <label>Toggle calendar view</label>
+        <name>LEC_Toggle_Calendar_View</name>
+    </customLabels>
+    <customLabels>
+        <label>Toggle day view</label>
+        <name>LEC_Toggle_Day_View</name>
+    </customLabels>
+    <customLabels>
+        <label>Toggle list view</label>
+        <name>LEC_Toggle_List_View</name>
+    </customLabels>
+    <customLabels>
+        <label>Toggle month view</label>
+        <name>LEC_Toggle_Month_View</name>
+    </customLabels>
+    <customLabels>
+        <label>Toggle timeline view</label>
+        <name>LEC_Toggle_Timeline_View</name>
+    </customLabels>
+    <customLabels>
+        <label>Toggle week view</label>
+        <name>LEC_Toggle_Week_View</name>
+    </customLabels>
+    <customLabels>
+        <label>Toggle year view</label>
+        <name>LEC_Toggle_Year_View</name>
+    </customLabels>
+    <customLabels>
+        <label>Type</label>
+        <name>LEC_Type</name>
+    </customLabels>
+    <customLabels>
+        <label>Update Calendar Entry</label>
+        <name>LEC_Update_Calendar_Entry_Modal_Header</name>
     </customLabels>
     <customTabs>
         <label><!-- Lightning Enhanced Calendar --></label>
