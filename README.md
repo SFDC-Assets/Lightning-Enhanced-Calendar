@@ -7,7 +7,7 @@ This package contains a Lightning Web Component and other support to display, cr
 
 ## Summary
 
-This component implements a self-contained (no off-platform HTTP references) calendar application that can be used for displaying, creating, updating, and deleting Salesforce records of any arbitray Salesforce object (SObject) in a variety of formats. The only requirement for the SObjects is that they must include `DateTime` fields that represent the start and end times of the calendar entries that are to be displayed.
+This component implements a self-contained (no off-platform HTTP references) calendar application that can be used for displaying, creating, updating, and deleting Salesforce records of any arbitrary Salesforce object (SObject) in a variety of formats. The only requirement for the SObjects is that they must include `DateTime` fields that represent the start and end times of the calendar entries that are to be displayed.
 
 ![Lightning Enhanced Calendar](images/Lightning_Enhanced_Calendar.png)
 
