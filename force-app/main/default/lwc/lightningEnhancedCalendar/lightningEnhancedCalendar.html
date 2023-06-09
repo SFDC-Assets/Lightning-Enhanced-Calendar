@@ -10,9 +10,11 @@
 -->
 <template>
 	<lightning-card title={cardTitle} icon-name="standard:event">
-		<template lwc:if={spinnerVisible}>
-			<lightning-spinner variant="brand" alternative-text="Loading calendar entries ..."></lightning-spinner>
-		</template>
+		<div class="slds-is-relative">
+			<template lwc:if={spinnerVisible}>
+				<lightning-spinner variant="brand" alternative-text="Loading calendar entries ..."></lightning-spinner>
+			</template>
+		</div>
 		<header slot="actions">
 			<lightning-button-group>
 				<template lwc:if={showNewButton}>

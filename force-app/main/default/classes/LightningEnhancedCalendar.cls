@@ -17,6 +17,7 @@ public with sharing class LightningEnhancedCalendar {
     private class ObjectListItem {
         private String objectApiName;
         private String customLabel;
+        private String nameFieldApiName;
         private String startApiName;
         private String endApiName;
         private String filter;
@@ -41,14 +42,14 @@ public with sharing class LightningEnhancedCalendar {
         @AuraEnabled public String errorMsg;
 
         @SuppressWarnings('PMD.ExcessiveParameterList')
-        public CalendarObject(String objectApiName, String customLabel, String startApiName, String endApiName) {
+        public CalendarObject(String objectApiName, String customLabel, String nameFieldApiName, String startApiName, String endApiName) {
             
             Schema.DescribeSObjectResult dsor = Schema.getGlobalDescribe().get(objectApiName).getDescribe();
             Map<String,Schema.SObjectField> fields = dsor.fields.getMap();
 
             this.objectApiName = objectApiName;
             this.objectLabel = customLabel == null ? dsor.getLabel() : customLabel;
-            this.nameFieldApiName = getNameField(fields.values());
+            this.nameFieldApiName = nameFieldApiName == null ? getNameField(fields.values()) : nameFieldApiName;
             this.nameFieldLabel = fields.get(this.nameFieldApiName)?.getDescribe().getLabel();
             this.startApiName = startApiName;
             this.startLabel = fields.get(startApiName)?.getDescribe().getLabel();
@@ -99,7 +100,7 @@ public with sharing class LightningEnhancedCalendar {
 
         List<CalendarObject> eventRecords = new List<CalendarObject>();
         for (ObjectListItem item : objects) {
-            CalendarObject calObject = new CalendarObject(item.objectApiName, item.customLabel, item.startApiName, item.endApiName);
+            CalendarObject calObject = new CalendarObject(item.objectApiName, item.customLabel, item.nameFieldApiName, item.startApiName, item.endApiName);
             try {
                 for (SObject record : Database.query(
                         'SELECT ' + calObject.nameFieldApiName + ',' + item.startApiName + ',' + item.endApiName + ' FROM ' + item.objectApiName +

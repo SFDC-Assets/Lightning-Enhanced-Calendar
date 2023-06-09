@@ -4,6 +4,14 @@
         <apexClass>LightningEnhancedCalendar</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>LightningEnhancedCalendarDurationView</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LightningEnhancedCalendarTypeView</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <description>Includes permissions required for using the Lightning Enhanced Calendar LWC.</description>
     <hasActivationRequired>false</hasActivationRequired>
     <label>Lightning Enhanced Calendar</label>

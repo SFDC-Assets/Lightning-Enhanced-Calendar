@@ -60,15 +60,15 @@ Each JSON array in the `Objects` configuration string must look something like t
         "customLabel": "Race Track Alpha",
         "startApiName": "Start_Time__c",
         "endApiName": "End_Time__c",
-        "filter": "Race_Track_Name__c = 'Alpha'",
+        "filter": "Name = 'Alpha'",
         "color": "#6A9955"
     },
     {
-        "objectApiName": "Test_Object__c",
+        "objectApiName": "Race_Track__c",
         "customLabel": "Race Track Bravo",
         "startApiName": "Start_Time__c",
         "endApiName": "End_Time__c",
-        "filter": "Race_Track_Name__c = 'Bravo'",
+        "filter": "Name = 'Bravo'",
         "color": "#BA0517"
     }
 ]
@@ -78,6 +78,7 @@ Each object has the following keys:
 
 - **objectApiName**: (*mandatory*) The API name of the SObject whose records are to be displayed.
 - **customLabel**: (*optional*) A label for the SObject whose records are to be displayed. If not specified, it defaults to the label of the SObject specified by **objectApiName**. This is useful, for example, if the same SObject is specified in multiple JSON object entries in the JSON string but with different **filter**s (see below).
+- **nameFieldApiName**: (*optional*) The API name of the field to use for the name of the record displayed in each calendar entry. If omitted, this will default to the name field of the object.
 - **startApiName**: (*mandatory*) The API name of the `DateTime` field representing the start date and time of the record to be displayed.
 - **endApiName**: (*mandatory*) The API name of the `DateTime` field representing the end date and time of the record to be displayed.
 - **filter**: (*optional*) A [Salesforce SOQL WHERE clause expression](https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/sforce_api_calls_soql_select_conditionexpression.htm) specifying which records of the given SObject to return. If the component is on a Lightning Record Page, you may use ```:recordId``` in the expression to reference the record Id of the page being displayed. This can be useful to restrict calendar entries to those directly related to the displayed record, for example: ```"filter": "StartTime__c > 2005-01-01T01:01:00Z AND OwnerId = :recordId"```
@@ -139,6 +140,7 @@ If you create a scratch org testbed environment using the included `CreateScratc
 - **The component will not install**: You must have Translation Workbench enabled in the target org with English, German, French, and Spanish activated. If you are getting other errors, try pulling down the "Advanced Options" twisty on the Salesforce installer page and select "Compile only the Apex in the package".
 - **The component does not display on the page**: If a page refresh (or two) does not fix the problem, make sure you have assigned the `Lightning Enhanced Calendar` permission set to the current user.
 - **The component is complaining that my Objects configuration variable is corrupt**: Please double-check your JSON string. The keys must be entered *exactly* as shown (upper- and lower-case is important). Keys and values *must* be surrounded by double-quotes("). Also, the string must represent an array, even if there is only one object to display.
+- **The component displays, but the records from one or more of the objects is not showing**: Have a *VERY* careful look at the JSON string and make sure that the API names are absolutely correct.
 
 ## Licensing
 
@@ -150,15 +152,15 @@ The FullCalendar and Moment libraries contained in the static resource, however,
 
 I am a pre-sales Solutions Engineer for [Salesforce](https://www.salesforce.com) and I develop solutions for my customers to demonstrate the capabilities of the amazing Salesforce platform. *This package represents functionality that I have used for demonstration purposes and the content herein is definitely not ready for actual production use; specifically, it has not been tested extensively nor has it been written with security and access controls in mind. By installing this package, you assume all risk for any consequences and agree not to hold me or my company liable.* If you are OK with that ...
 
-[Install the Package in Production](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tHu000003soDFIAY)
+[Install the Package in Production](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tHu000003srIdIAI)
 
-[Install the Package in a Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tHu000003soDFIAY)
+[Install the Package in a Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tHu000003srIdIAI)
 
 ## Maintainer
 
 John Meyer, Salesforce Solution Engineer
 
-**Current Version**: 1.0.1
+**Current Version**: 1.0.2
 
 ## References
 
