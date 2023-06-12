@@ -51,6 +51,7 @@ Each JSON array in the `Objects` configuration string must look something like t
 [
     {
         "objectApiName": "Event",
+        "nameFieldApiName": "Subject",
         "startApiName": "StartDateTime",
         "endApiName": "EndDateTime",
         "color": "#3A87AD"
