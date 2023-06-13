@@ -17,23 +17,13 @@
 		</div>
 		<header slot="actions">
 			<lightning-button-group>
-				<template lwc:if={showNewButton}>
-					<lightning-button
-						variant="neutral"
-						label={labels.NEW_LABEL}
-						icon-name="utility:add"
-						alternative-text={labels.CREATE_NEW_CALENDAR_ENTRY}
-						title={labels.CREATE_NEW_CALENDAR_ENTRY}
-						onclick={handleNewEvent}
-					></lightning-button>
-				</template>
 				<lightning-button
 					variant="neutral"
-					label={labels.REFRESH}
-					icon-name="utility:refresh"
-					alternative-text={labels.REFRESH_THE_CALENDAR}
-					title={labels.REFRESH_THE_CALENDAR}
-					onclick={initializeCalendar}
+					label={labels.NEW_LABEL}
+					icon-name="utility:add"
+					alternative-text={labels.CREATE_NEW_CALENDAR_ENTRY}
+					title={labels.CREATE_NEW_CALENDAR_ENTRY}
+					onclick={handleNewEvent}
 				></lightning-button>
 				<lightning-button
 					variant="neutral"

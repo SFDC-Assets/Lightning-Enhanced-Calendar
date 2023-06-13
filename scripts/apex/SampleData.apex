@@ -24,7 +24,7 @@ testEvents = new List<Test_Object__c>();
 for (Integer ev = 1; ev <= MAX_EVENTS; ev++) {
     DateTime startingTime = now.addMinutes(Integer.valueOf((Math.random()*2.0 < 1.0 ? -1 : 1) * (Math.random() * DAY_SPREAD * 24 * 60)));
     DateTime endingTime = startingTime.addMinutes(30 + Integer.valueOf(Math.random() * 60 * 18));
-    events.add(new Event (Subject = 'Event ' + ev, StartDateTime = startingTime, EndDateTime = endingTime));
+    events.add(new Event (Subject = 'Meeting', Description = 'Event ' + ev, StartDateTime = startingTime, EndDateTime = endingTime));
     startingTime = now.addMinutes(Integer.valueOf((Math.random()*2.0 < 1.0 ? -1 : 1) * (Math.random() * DAY_SPREAD * 24 * 60)));
     endingTime = startingTime.addMinutes(30 + Integer.valueOf(Math.random() * 60 * 18));
     testEvents.add(new Test_Object__c (Name = 'Test Object ' + ev, Start_Time__c = startingTime, End_Time__c = endingTime));

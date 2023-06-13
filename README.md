@@ -51,7 +51,7 @@ Each JSON array in the `Objects` configuration string must look something like t
 [
     {
         "objectApiName": "Event",
-        "nameFieldApiName": "Subject",
+        "nameFieldApiName": "Description",
         "startApiName": "StartDateTime",
         "endApiName": "EndDateTime",
         "color": "#3A87AD"
@@ -125,7 +125,7 @@ The component includes display labels and toast messages for English, Spanish, F
 
 ## Bonus Component: Lightning Enhanced Calendar Dynamic Interaction Tester
 
-I have included an additional component that will intercept and display calendar entry creation, update, and deletion events from Lightning Enhanced Calendar using [Lightning Dynamic Interactions](https://admin.salesforce.com/blog/2021/introducing-dynamic-interactions-the-latest-low-code-innovation-for-salesforce-platform). At the time of this writing, however, these are only available in Lightning App pages. The component is there to (1) demonstrate how a component can be written and configured in Lightning App Builder to respond to calendar update events from Lightning Enhanced Calendar and (2) help me test the main LWC code.
+I have included an additional component that will intercept and display calendar entry update and deletion events from Lightning Enhanced Calendar using [Lightning Dynamic Interactions](https://admin.salesforce.com/blog/2021/introducing-dynamic-interactions-the-latest-low-code-innovation-for-salesforce-platform). At the time of this writing, however, these are only available in Lightning App pages. The component is there to (1) demonstrate how a component can be written and configured in Lightning App Builder to respond to calendar update events from Lightning Enhanced Calendar and (2) help me test the main LWC code.
 
 If you create a scratch org testbed environment using the included `CreateScratchOrg` script, the `Lightning Enhanced Calendar` app page will be set up with this component already properly configured and a separate permission set, `Lightning Enhanced Calendar Tester`, that grants access to the page and custom tab, assigned to the default user. Note that this component will only be installed in a scratch org using this script and is not included in the installable Salesforce package.
 
@@ -142,6 +142,7 @@ If you create a scratch org testbed environment using the included `CreateScratc
 - **The component does not display on the page**: If a page refresh (or two) does not fix the problem, make sure you have assigned the `Lightning Enhanced Calendar` permission set to the current user.
 - **The component is complaining that my Objects configuration variable is corrupt**: Please double-check your JSON string. The keys must be entered *exactly* as shown (upper- and lower-case is important). Keys and values *must* be surrounded by double-quotes("). Also, the string must represent an array, even if there is only one object to display.
 - **The component displays, but the records from one or more of the objects is not showing**: Have a *VERY* careful look at the JSON string and make sure that the API names are absolutely correct.
+- **When I try to create a new Salesforce Event record by dragging, the start and end dates show the current date and time**: This is a quirk of the Create action for the standard Salesforce ```Event``` object. Custom objects don't seem to exhibit this behavior.
 
 ## Licensing
 
@@ -153,15 +154,15 @@ The FullCalendar and Moment libraries contained in the static resource, however,
 
 I am a pre-sales Solutions Engineer for [Salesforce](https://www.salesforce.com) and I develop solutions for my customers to demonstrate the capabilities of the amazing Salesforce platform. *This package represents functionality that I have used for demonstration purposes and the content herein is definitely not ready for actual production use; specifically, it has not been tested extensively nor has it been written with security and access controls in mind. By installing this package, you assume all risk for any consequences and agree not to hold me or my company liable.* If you are OK with that ...
 
-[Install the Package in Production](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tHu000003srIdIAI)
+[Install the Package in Production](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tHu000003srubIAA)
 
-[Install the Package in a Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tHu000003srIdIAI)
+[Install the Package in a Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tHu000003srubIAA)
 
 ## Maintainer
 
 John Meyer, Salesforce Solution Engineer
 
-**Current Version**: 1.0.2
+**Current Version**: 1.0.3
 
 ## References
 

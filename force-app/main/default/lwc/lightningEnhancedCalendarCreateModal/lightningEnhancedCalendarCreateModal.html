@@ -11,42 +11,15 @@
 <template>
 	<lightning-modal-header label={labels.CREATE_NEW_CALENDAR_ENTRY_MODAL_HEADER}></lightning-modal-header>
 	<lightning-modal-body>
-		<template lwc:if={showObjectList}>
-			<lightning-combobox
-				lwc:ref="objectSelector"
-				label={labels.CALENDAR_ENTRY_TYPE}
-				placeholder={labels.PLEASE_SELECT_CALENDAR_ENTRY_TYPE}
-				options={objectList}
-				value=""
-				onchange={handleObjectListSelect}
-				required
-			></lightning-combobox>
-		</template>
-		<template lwc:if={showInputFields}>
-			<lightning-input lwc:ref="title" type="text" label={selectedObject.nameFieldLabel} required></lightning-input>
-			<lightning-layout horizontal-align="spread" class="slds-var-p-top_small">
-				<lightning-layout-item size="6">
-					<lightning-input
-						lwc:ref="startDate"
-						type="datetime"
-						label={selectedObject.startLabel}
-						value={startDate}
-						onchange={handleDateChange}
-						required
-					></lightning-input>
-				</lightning-layout-item>
-				<lightning-layout-item size="6">
-					<lightning-input
-						lwc:ref="endDate"
-						type="datetime"
-						label={selectedObject.endLabel}
-						value={endDate}
-						onchange={handleDateChange}
-						required
-					></lightning-input>
-				</lightning-layout-item>
-			</lightning-layout>
-		</template>
+		<lightning-combobox
+			lwc:ref="objectSelector"
+			label={labels.CALENDAR_ENTRY_TYPE}
+			placeholder={labels.PLEASE_SELECT_CALENDAR_ENTRY_TYPE}
+			options={objectList}
+			value=""
+			onchange={handleObjectListSelect}
+			required
+		></lightning-combobox>
 	</lightning-modal-body>
 	<lightning-modal-footer>
 		<lightning-button

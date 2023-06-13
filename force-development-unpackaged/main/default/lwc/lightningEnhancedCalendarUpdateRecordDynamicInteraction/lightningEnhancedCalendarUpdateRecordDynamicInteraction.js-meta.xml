@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>57.0</apiVersion>
+    <apiVersion>58.0</apiVersion>
     <masterLabel>Lightning Enhanced Calendar Dynamic Interaction Tester</masterLabel>
     <description>A Lightning Web Component for testing dynamic interactions from the Lightning Enhanced Calendar LWC.</description>
     <isExposed>true</isExposed>

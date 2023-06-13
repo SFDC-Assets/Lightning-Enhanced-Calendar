@@ -133,24 +133,4 @@ private without sharing class LightningEnhancedCalendarTest {
         System.Test.stopTest();
     }
 
-    @isTest
-    private static void testGoodCreateRecord () {
-        System.Test.startTest();
-        Id recordId = LightningEnhancedCalendar.createRecord('Event', 'Subject', 'StartDateTime', 'EndDateTime', 'Test', Datetime.now(), Datetime.now().addHours(1));
-        Assert.areEqual(1, [SELECT COUNT() FROM Event WHERE Id = :recordId]);
-        System.Test.stopTest();
-    }
-
-    @SuppressWarnings('PMD.EmptyCatchBlock')
-    @isTest
-    private static void testBadCreateRecord () {
-        System.Test.startTest();
-        try {
-            LightningEnhancedCalendar.createRecord('BadObject', 'BadName', 'startApiName', 'endApiName', 'name', Datetime.now(), Datetime.now().addHours(1));
-            Assert.fail('createRecord should have generated an exception.');
-        } catch (Exception e) {
-            // Exception properly generated.
-        }
-        System.Test.stopTest();
-    }
 }

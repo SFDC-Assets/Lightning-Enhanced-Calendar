@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>57.0</apiVersion>
+    <apiVersion>58.0</apiVersion>
     <masterLabel>Lightning Enhanced Calendar</masterLabel>
     <description>A Lightning Web Component that displays records from multiple objects on a calendar.</description>
     <isExposed>true</isExposed>
@@ -22,7 +22,7 @@
                 datasource="apex://LightningEnhancedCalendarTypeView"
                 description="The type of calendar view that appears when the component first loads." />
             <property name="objects" label="Objects" type="String"
-                default='[{"objectApiName": "Event", "startApiName": "StartDateTime", "endApiName": "EndDateTime", "filter": "CreatedDate > 2005-01-01T01:01:00Z", "color": "#3A87AD"}]'
+                default='[{"objectApiName": "Event", "nameFieldApiName": "Description", "startApiName": "StartDateTime", "endApiName": "EndDateTime", "filter": "CreatedDate > 2005-01-01T01:01:00Z", "color": "#3A87AD"}]'
                 description="A JSON string representing an array of objects containing the object API name, the API names of the start and end fields, and the color. Please see the documentation for details."
                 required="true" />
             <property name="shadeWeekends" label="Shade Weekends" type="Boolean" default="false"
@@ -90,7 +90,7 @@
                 datasource="apex://LightningEnhancedCalendarTypeView"
                 description="The type of calendar view that appears when the component first loads." />
             <property name="objects" label="Objects" type="String"
-                default='[{"objectApiName": "Event", "startApiName": "StartDateTime", "endApiName": "EndDateTime", "filter": "CreatedDate > 2005-01-01T01:01:00Z", "color": "#3A87AD"}]'
+                default='[{"objectApiName": "Event", "nameFieldApiName": "Description", "startApiName": "StartDateTime", "endApiName": "EndDateTime", "filter": "CreatedDate > 2005-01-01T01:01:00Z", "color": "#3A87AD"}]'
                 description="A JSON string representing an array of objects containing the object API name, the API names of the start and end fields, and the color. Please see the documentation for details."
                 required="true" />
             <property name="shadeWeekends" label="Shade Weekends" type="Boolean" default="false"
@@ -113,7 +113,7 @@
                 datasource="apex://LightningEnhancedCalendarTypeView"
                 description="The type of calendar view that appears when the component first loads." />
             <property name="objects" label="Objects" type="String"
-            default='[{"objectApiName": "Event", "startApiName": "StartDateTime", "endApiName": "EndDateTime", "filter": "CreatedDate > 2005-01-01T01:01:00Z", "color": "#3A87AD"}]'
+                default='[{"objectApiName": "Event", "nameFieldApiName": "Description", "startApiName": "StartDateTime", "endApiName": "EndDateTime", "filter": "CreatedDate > 2005-01-01T01:01:00Z", "color": "#3A87AD"}]'
                 description="A JSON string representing an array of objects containing the object API name, the API names of the start and end fields, and the color. Please see the documentation for details."
                 required="true" />
             <property name="shadeWeekends" label="Shade Weekends" type="Boolean" default="false"

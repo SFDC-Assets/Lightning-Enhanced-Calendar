@@ -35,7 +35,6 @@ public with sharing class LightningEnhancedCalendar {
         @AuraEnabled public String startLabel;
         @AuraEnabled public String endApiName;
         @AuraEnabled public String endLabel;
-        @AuraEnabled public Boolean isCreateable;
         @AuraEnabled public List<CalendarEntry> events;
         @AuraEnabled public String color;
         @AuraEnabled public Boolean error;
@@ -55,7 +54,6 @@ public with sharing class LightningEnhancedCalendar {
             this.startLabel = fields.get(startApiName)?.getDescribe().getLabel();
             this.endApiName = endApiName;
             this.endLabel = fields.get(endApiName)?.getDescribe().getLabel();
-            this.isCreateable = isCreateable(fields, startApiName, endApiName);
             this.events = new List<CalendarEntry>();
             this.error = false;
             this.errorMsg = null;
@@ -143,27 +141,6 @@ public with sharing class LightningEnhancedCalendar {
     }
 
 
-    //  Returns true if the object is createable, namely, if it does not contain any other required fields besides the start
-    //  and end DateTimes.
-    //
-    //  The parameters represent:
-    //      fields: a map of field names to Schema.SObjectFields
-    //      startApiName:  the API name of the starting DateTime field.
-    //      endApiName:  the API name of the ending DateTime field.
-
-    private static Boolean isCreateable (Map<String,Schema.SObjectField> fields, String startApiName, String endApiName) {
-        for (String field : fields.keySet()) {
-            if (field != startApiName && field != endApiName) {
-                Schema.DescribeFieldResult dfr = fields.get(field).getDescribe();
-                if (dfr.isCreateable() && !dfr.isNillable() && !dfr.isDefaultedOnCreate()) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-
     //  Update a record with new values from the calendar. Normally, this would be done with a <lightning-record-edit-form>
     //  but as of this writing, this API does not support the Event SObject type.
     //
@@ -208,29 +185,4 @@ public with sharing class LightningEnhancedCalendar {
         }
     }
 
-
-    //  Create a record with new values from the calendar. Normally, this would be done with a <lightning-record-edit-form>
-    //  but as of this writing, this API does not support the Event SObject type.
-    //
-    //  The parameters represent:
-    //      objectApiName:  the API name of the object to create.
-    //      startApiName:  the API name of the starting DateTime field.
-    //      endApiName:  the API name of the ending DateTime field.
-    //      startDate:  the new start date and time.
-    //      endDate:  the new end date and time.
-
-    @SuppressWarnings('PMD.ExcessiveParameterList, PMD.ApexCRUDViolation')
-    @AuraEnabled
-    public static Id createRecord(String objectApiName, String nameFieldApiName, String startApiName, String endApiName, String name, DateTime startDate, DateTime endDate) {
-        try {
-            SObject record = Schema.getGlobalDescribe().get(objectApiName).newSObject();
-            record.put(nameFieldApiName, name);
-            record.put(startApiName, startDate);
-            record.put(endApiName, endDate);
-            insert record;
-            return record.Id;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
-    }
 }

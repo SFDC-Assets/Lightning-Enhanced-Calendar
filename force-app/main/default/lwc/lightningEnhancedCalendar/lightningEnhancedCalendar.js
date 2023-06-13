@@ -11,6 +11,7 @@ import { LightningElement, api, track } from 'lwc';
 import { loadStyle, loadScript } from 'lightning/platformResourceLoader';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation';
+import { encodeDefaultFieldValues } from 'lightning/pageReferenceUtils';
 import fullCalendar from '@salesforce/resourceUrl/fullCalendar';
 import LightningEnhancedCalendarAboutModal from 'c/lightningEnhancedCalendarAboutModal';
 import LightningEnhancedCalendarInfoModal from 'c/lightningEnhancedCalendarInfoModal';
@@ -19,7 +20,6 @@ import LightningEnhancedCalendarCreateModal from 'c/lightningEnhancedCalendarCre
 import getEvents from '@salesforce/apex/LightningEnhancedCalendar.getEvents';
 import updateRecord from '@salesforce/apex/LightningEnhancedCalendar.updateRecord';
 import deleteRecord from '@salesforce/apex/LightningEnhancedCalendar.deleteRecord';
-import createRecord from '@salesforce/apex/LightningEnhancedCalendar.createRecord';
 
 import COULD_NOT_LOAD_MAIN_JAVASCRIPT_LIBRARIES from '@salesforce/label/c.LEC_Could_Not_Load_Main_JavaScript_Libraries';
 import COULD_NOT_LOAD_SUPPLEMENTAL_JAVASCRIPT_LIBRARIES from '@salesforce/label/c.LEC_Could_Not_Load_Supplemental_JavaScript_Libraries';
@@ -121,10 +121,6 @@ export default class LightningEnhancedCalendar extends NavigationMixin(Lightning
 
 	objectProperties = [];
 
-	get showNewButton() {
-		return this.objectProperties.reduce((createable, calObject) => createable || calObject.isCreateable, false);
-	}
-
 	connectedCallback() {
 		this.addEventListener('fcnewdraggedevent', this.handleNewDraggedEvent.bind(this));
 		this.addEventListener('fceventclick', this.handleEventClick.bind(this));
@@ -222,7 +218,6 @@ export default class LightningEnhancedCalendar extends NavigationMixin(Lightning
 								startLabel: calObject.startLabel,
 								endApiName: calObject.endApiName,
 								endLabel: calObject.endLabel,
-								isCreateable: calObject.isCreateable,
 								color: calObject.color
 							});
 							calObject.events.forEach((calEvent) => {
@@ -408,71 +403,25 @@ export default class LightningEnhancedCalendar extends NavigationMixin(Lightning
 			size: 'small',
 			description: 'Create new calendar entry',
 			objectProperties: this.objectProperties,
-			startDate: startDate === null ? null : this.calendar.formatIso(startDate),
-			endDate: endDate === null ? null : this.calendar.formatIso(endDate)
 		}).then((returnValue) => {
 			switch (returnValue.status) {
 				case 'cancel':
 					break;
 				case 'create':
-					this.spinnerVisible = true;
-					createRecord({
-						objectApiName: returnValue.objectApiName,
-						nameFieldApiName: returnValue.nameFieldApiName,
-						startApiName: returnValue.startApiName,
-						endApiName: returnValue.endApiName,
-						name: returnValue.name,
-						startDate: returnValue.startDate,
-						endDate: returnValue.endDate
-					})
-						.then((result) => {
-							this.calendar.addEvent({
-								id: result,
-								title: returnValue.name,
-								start: new Date(returnValue.startDate),
-								end: new Date(returnValue.endDate),
-								color: this.objectProperties.find((elem) => elem.objectApiName === returnValue.objectApiName).color,
-								extendedProps: {
-									objectApiName: returnValue.objectApiName
-								}
-							});
-							this.calendar.render();
-							this.dispatchEvent(
-								new ShowToastEvent({
-									message: CALENDAR_ENTRY_SUCCESSFULLY_CREATED,
-									variant: 'success'
-								})
-							);
-							this.dispatchEvent(
-								new CustomEvent('leceventchanged', {
-									bubbles: true,
-									composed: true,
-									detail: {
-										kind: 'new',
-										recordId: result,
-										objectApiName: returnValue.objectApiName,
-										startApiName: returnValue.startApiName,
-										endApiName: returnValue.endApiName,
-										start: returnValue.startDate,
-										end: returnValue.endDate
-									}
-								})
-							);
-						})
-						.catch((error) => {
-							this.dispatchEvent(
-								new ShowToastEvent({
-									title: COULD_NOT_CREATE_CALENDAR_ENTRY,
-									message: error.body.message,
-									variant: 'error',
-									mode: 'sticky'
-								})
-							);
-						})
-						.finally(() => {
-							this.spinnerVisible = false;
-						});
-					break;
+					let defaultValues = {};
+					defaultValues[returnValue.nameFieldApiName] = returnValue.name;
+					defaultValues[returnValue.startApiName] = startDate === null ? null : this.calendar.formatIso(startDate);
+					defaultValues[returnValue.endApiName] = endDate === null ? null : this.calendar.formatIso(endDate);
+					this[NavigationMixin.Navigate]({
+						type: 'standard__objectPage',
+						attributes: {
+							objectApiName: returnValue.objectApiName,
+							actionName: 'new'
+						},
+						state: {
+							defaultFieldValues: encodeDefaultFieldValues(defaultValues)
+						}
+					});
 			}
 		});
 	}
