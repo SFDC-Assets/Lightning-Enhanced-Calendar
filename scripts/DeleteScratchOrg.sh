@@ -1,11 +1,18 @@
 #!/bin/bash
 #
-#  Deletes the current scratch org.
-#
-#  Copyright (c) 2023, salesforce.com, inc.
+##  Copyright (c) 2023, salesforce.com, inc.
 #  All rights reserved.
-#  SPDX-License-Identifier: BSD-3-Clause
-#  For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+#  SPDX-License-Identifier: GPL-2.0-only
+#  For full license text, see the LICENSE file in the repo root or https://opensource.org/license/gpl-2-0
+#
+#  This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; version 2.
+#
+#  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software
+#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 #
 #  Contact: john.meyer@salesforce.com
 
@@ -19,10 +26,10 @@ readonly tmpFile=$(jq --raw-output .defaultdevhubusername < .sfdx/sfdx-config.js
 }
 readonly scratchOrgId=$(sfdx force:org:display --json | jq --raw-output .result.id | cut -c 1-15)
 
-sfdx data query \
+sf data query \
     --query "SELECT Id FROM ScratchOrgInfo WHERE ScratchOrg = '$scratchOrgId'" \
     --result-format csv \
     --target-org "$devHubOrgAlias" > "$tmpFile"
 echo "*** Found scratch org $scratchOrgId ..."
-sfdx force data bulk delete --file "$tmpFile" --sobject ScratchOrgInfo --wait 10 --target-org "$devHubOrgAlias"
+sf data bulk delete --file "$tmpFile" --sobject ScratchOrgInfo --wait 10 --target-org "$devHubOrgAlias"
 rm -f "$tmpFile"

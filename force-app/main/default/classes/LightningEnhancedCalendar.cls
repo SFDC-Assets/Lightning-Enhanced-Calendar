@@ -2,8 +2,17 @@
 //
 //  Copyright (c) 2023, salesforce.com, inc.
 //  All rights reserved.
-//  SPDX-License-Identifier: BSD-3-Clause
-//  For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
+//  SPDX-License-Identifier: GPL-2.0-only
+//  For full license text, see the LICENSE file in the repo root or https://opensource.org/license/gpl-2-0
+//
+//  This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation; version 2.
+//
+//  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software
+//  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 //  Contact: john.meyer@salesforce.com
 
@@ -85,13 +94,16 @@ public with sharing class LightningEnhancedCalendar {
     //      objectsString:  A JSON string that will be deserialized into a list of ObjectListItem objects. Each item must contain:
     //      recordId:  (optional) the Id of a parent record used in an (optional) filter if used on a record page.
 
-    @SuppressWarnings('PMD.ApexSoqlInjection')
+    @SuppressWarnings('PMD.ApexSoqlInjection, PMD.OperationWithLimitsInLoop')
     @AuraEnabled(cacheable=true)
     public static List<CalendarObject> getEvents (String objectsString, Id recordId) {
 
         List<ObjectListItem> objects;
         try {
             objects = (List<ObjectListItem>) JSON.deserialize(objectsString, List<ObjectListItem>.class);
+            if (objects.size() > Limits.getLimitQueries()) {
+                throw new AuraHandledException(System.Label.LEC_Too_Many_Objects + ' ' + Limits.getLimitQueries());
+            }    
         } catch (Exception e) {
             throw new AuraHandledException(System.Label.LEC_Bad_Objects_String);
         }
@@ -100,22 +112,27 @@ public with sharing class LightningEnhancedCalendar {
         for (ObjectListItem item : objects) {
             CalendarObject calObject = new CalendarObject(item.objectApiName, item.customLabel, item.nameFieldApiName, item.startApiName, item.endApiName);
             try {
-                for (SObject record : Database.query(
+                for (List<SObject> records : Database.query(
                         'SELECT ' + calObject.nameFieldApiName + ',' + item.startApiName + ',' + item.endApiName + ' FROM ' + item.objectApiName +
                         (item.filter == null ? '' : ' WHERE (' + item.filter + ')')
                     )) {
-                    calObject.events.add(new CalendarEntry(
-                        item.objectApiName,
-                        (String) record.get(calObject.nameFieldApiName),
-                        (DateTime) record.get(item.startApiName),
-                        (DateTime) record.get(item.endApiName),
-                        (Id) record.get('Id')
-                    ));
+                    for (Sobject record : records) {
+                        calObject.events.add(new CalendarEntry(
+                            item.objectApiName,
+                            (String) record.get(calObject.nameFieldApiName),
+                            (DateTime) record.get(item.startApiName),
+                            (DateTime) record.get(item.endApiName),
+                            (Id) record.get('Id')
+                        ));
+                    }
                 }
                 calObject.color = item.color == null ? DEFAULT_COLOR : item.color;
             } catch (QueryException e) {
                 calObject.error = true;
                 calObject.errorMsg = e.getMessage();
+            } catch (LimitException e) {
+                calObject.error = true;
+                throw new AuraHandledException(System.Label.LEC_Too_Many_Records + ' ' + Limits.getLimitQueryRows());
             }
             eventRecords.add(calObject);
         }
@@ -152,16 +169,16 @@ public with sharing class LightningEnhancedCalendar {
     //      endDate:  the new end date and time.
     //      recordId:  the Id of the record to update.
 
-    @SuppressWarnings('PMD.ExcessiveParameterList, PMD.ApexSoqlInjection, PMD.ApexCRUDViolation')
+    @SuppressWarnings('PMD.ExcessiveParameterList')
     @AuraEnabled
     public static void updateRecord(String objectApiName, String startApiName, String endApiName, DateTime startDate, DateTime endDate, Id recordId) {
         try {
             SObject record = Database.query(
-                'SELECT ' + startApiName + ',' + endApiName + ' FROM ' + objectApiName + ' WHERE Id = :recordId'
+                String.escapeSingleQuotes('SELECT ' + startApiName + ',' + endApiName + ' FROM ' + objectApiName + ' WHERE Id = :recordId')
             );
             record.put(startApiName, startDate);
             record.put(endApiName, endDate);
-            update record;
+            update as user record;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
@@ -174,15 +191,9 @@ public with sharing class LightningEnhancedCalendar {
     //      objectApiName:  the API name of the object.
     //      recordId:  the Id of the record to delete.
 
-    @SuppressWarnings('PMD.ApexSoqlInjection, PMD.ApexCRUDViolation')
     @AuraEnabled
     public static void deleteRecord(String objectApiName, Id recordId) {
-        try {
-            SObject record = Database.query('SELECT Id FROM ' + objectApiName + ' WHERE Id = :recordId');
-            delete record;
-        } catch (Exception e) {
-            throw new AuraHandledException(e.getMessage());
-        }
+        delete as user Database.query(String.escapeSingleQuotes('SELECT Id FROM ' + objectApiName + ' WHERE Id = :recordId'));
     }
 
 }

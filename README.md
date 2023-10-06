@@ -146,7 +146,7 @@ If you create a scratch org testbed environment using the included `CreateScratc
 
 ## Licensing
 
-All of the Salesforce code and metadata in this repository are licensed under the BSD 3-Clause open source license. That basically means that you may freely copy, use, and modify the code and do whatever you want with it, as long as you don't expect to get any support from Salesforce or me. Use and installation of the components are completely at your own risk. Please see the **Caveats** section above before you deploy it into any production environments.
+All of the Salesforce code and metadata in this repository are licensed under the GPL v2 open source license. You may freely copy, use, and modify the code and do whatever you want with it, as long as you don't expect to get any support from Salesforce or me. Use and installation of the components are completely at your own risk. Please see the **Caveats** section above before you deploy it into any production environments.
 
 The FullCalendar and Moment libraries contained in the static resource, however, are licensed differently. Unless you are using it with an open source project (as I am), you must license the code from FullCalendar. This package makes use of several premium plug-ins. Please see [FullCalendar's licensing page](https://fullcalendar.io/license) for details.
 

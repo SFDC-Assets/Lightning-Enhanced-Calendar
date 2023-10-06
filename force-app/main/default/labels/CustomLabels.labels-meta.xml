@@ -352,4 +352,20 @@
         <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
         <value>Refresh the calendar</value>
     </labels>
+    <labels>
+        <fullName>LEC_Too_Many_Objects</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>You have too many items in your object list. The maximum is</value>
+    </labels>
+    <labels>
+        <fullName>LEC_Too_Many_Records</fullName>
+        <categories>Lightning Enhanced Calendar</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Used by Lightning Enhanced Calendar</shortDescription>
+        <value>You are trying to display too many items. The maximum is</value>
+    </labels>
 </CustomLabels>
