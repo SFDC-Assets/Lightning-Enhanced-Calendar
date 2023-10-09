@@ -4,8 +4,8 @@
       "path": "force-app",
       "default": true,
       "package": "Lightning Enhanced Calendar",
-      "versionName": "Version 1.0.4.0",
-      "versionNumber": "1.0.4.0",
+      "versionName": "Version 1.0.5.0",
+      "versionNumber": "1.0.5.0",
       "unpackagedMetadata": {
         "path": "force-development-unpackaged"
       },
