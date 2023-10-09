@@ -94,7 +94,7 @@ public with sharing class LightningEnhancedCalendar {
     //      objectsString:  A JSON string that will be deserialized into a list of ObjectListItem objects. Each item must contain:
     //      recordId:  (optional) the Id of a parent record used in an (optional) filter if used on a record page.
 
-    @SuppressWarnings('PMD.ApexSoqlInjection, PMD.OperationWithLimitsInLoop')
+    @SuppressWarnings('PMD.OperationWithLimitsInLoop')
     @AuraEnabled(cacheable=true)
     public static List<CalendarObject> getEvents (String objectsString, Id recordId) {
 
@@ -113,7 +113,7 @@ public with sharing class LightningEnhancedCalendar {
             CalendarObject calObject = new CalendarObject(item.objectApiName, item.customLabel, item.nameFieldApiName, item.startApiName, item.endApiName);
             try {
                 for (List<SObject> records : Database.query(
-                        'SELECT ' + calObject.nameFieldApiName + ',' + item.startApiName + ',' + item.endApiName + ' FROM ' + item.objectApiName +
+                    String.escapeSingleQuotes('SELECT ' + calObject.nameFieldApiName + ',' + item.startApiName + ',' + item.endApiName + ' FROM ' + item.objectApiName) +
                         (item.filter == null ? '' : ' WHERE (' + item.filter + ')')
                     )) {
                     for (Sobject record : records) {
