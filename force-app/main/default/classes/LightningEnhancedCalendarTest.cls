@@ -76,6 +76,18 @@ private without sharing class LightningEnhancedCalendarTest {
 	}
 
 	@isTest
+	private static void testBadObjectName() {
+		System.Test.startTest();
+		List<LightningEnhancedCalendar.CalendarObject> calObjects = LightningEnhancedCalendar.getEvents(
+			'[{"objectApiName": "BadObjectApiName", "startApiName": "BadFieldName", "endApiName": "EndDateTime", "color": "#3A87AD"}]',
+			null
+		);
+		// Exception properly handled.
+		Assert.areEqual(calObjects.size(), calObjects.size(), 'Bad object exception was not handled.');
+		System.Test.stopTest();
+	}
+
+	@isTest
 	private static void testBadObjectSettings() {
 		System.Test.startTest();
 		List<LightningEnhancedCalendar.CalendarObject> calObjects = LightningEnhancedCalendar.getEvents(
@@ -83,7 +95,7 @@ private without sharing class LightningEnhancedCalendarTest {
 			null
 		);
 		// Exception properly handled.
-		Assert.areEqual(calObjects.size(), calObjects.size(), 'Bad object exception was not handled.');
+		Assert.areEqual(calObjects.size(), calObjects.size(), 'Bad object settings exception was not handled.');
 		System.Test.stopTest();
 	}
 

@@ -21,11 +21,10 @@
 public with sharing class LightningEnhancedCalendar {
 
     private static final String DEFAULT_COLOR = '#3A87AD';
-    @testVisible private final static Integer TEST_MAXIMUM_ROWS = 10;
+    @testVisible private static final Integer TEST_MAXIMUM_ROWS = 10;
 
     //  Internal object representing the description of an object to be displayed on the calendar. The input to the
     //  getEvents() method is a serialized JSON string representing this object.
-
     private class ObjectListItem {
         private String objectApiName;
         private String customLabel;
@@ -52,23 +51,26 @@ public with sharing class LightningEnhancedCalendar {
         @AuraEnabled public String errorMsg;
 
         @SuppressWarnings('PMD.ExcessiveParameterList')
-        public CalendarObject(String objectApiName, String customLabel, String nameFieldApiName, String startApiName, String endApiName) {
-            
-            Schema.DescribeSObjectResult dsor = Schema.getGlobalDescribe().get(objectApiName).getDescribe();
-            Map<String,Schema.SObjectField> fields = dsor.fields.getMap();
-
-            this.objectApiName = objectApiName;
-            this.objectLabel = customLabel == null ? dsor.getLabel() : customLabel;
-            this.nameFieldApiName = nameFieldApiName == null ? getNameField(fields.values()) : nameFieldApiName;
-            this.nameFieldLabel = fields.get(this.nameFieldApiName)?.getDescribe().getLabel();
-            this.startApiName = startApiName;
-            this.startLabel = fields.get(startApiName)?.getDescribe().getLabel();
-            this.endApiName = endApiName;
-            this.endLabel = fields.get(endApiName)?.getDescribe().getLabel();
-            this.events = new List<CalendarEntry>();
-            this.color = DEFAULT_COLOR;
-            this.error = false;
-            this.errorMsg = null;
+        public CalendarObject(String objectApiName, String customLabel, String nameFieldApiName, String startApiName, String endApiName) {            
+            Schema.DescribeSObjectResult dsor = Schema.getGlobalDescribe().get(objectApiName)?.getDescribe();
+            if (dsor == null) {
+                this.error = true;
+                this.errorMsg = System.Label.LEC_Bad_Objects_String + ' (' + objectApiName + ')';
+            } else {
+                Map<String,Schema.SObjectField> fields = dsor.fields.getMap();
+                this.objectApiName = objectApiName;
+                this.objectLabel = customLabel == null ? dsor.getLabel() : customLabel;
+                this.nameFieldApiName = nameFieldApiName == null ? getNameField(fields.values()) : nameFieldApiName;
+                this.nameFieldLabel = fields.get(this.nameFieldApiName)?.getDescribe().getLabel();
+                this.startApiName = startApiName;
+                this.startLabel = fields.get(startApiName)?.getDescribe().getLabel();
+                this.endApiName = endApiName;
+                this.endLabel = fields.get(endApiName)?.getDescribe().getLabel();
+                this.events = new List<CalendarEntry>();
+                this.color = DEFAULT_COLOR;
+                this.error = false;
+                this.errorMsg = null;
+            }
         }
     }
 
@@ -123,30 +125,32 @@ public with sharing class LightningEnhancedCalendar {
         List<CalendarObject> eventRecords = new List<CalendarObject>();
         for (ObjectListItem item : objects) {
             CalendarObject calObject = new CalendarObject(item.objectApiName, item.customLabel, item.nameFieldApiName, item.startApiName, item.endApiName);
-            try {
-                if (rowsLeft <= 0) {
-                    throw new AuraHandledException(System.Label.LEC_Too_Many_Records + ' ' + Limits.getLimitQueryRows());
-                }
-                for (List<SObject> records : Database.query(
-                    String.escapeSingleQuotes('SELECT ' + calObject.nameFieldApiName + ',' + item.startApiName + ',' + item.endApiName + ' FROM ' + item.objectApiName) +
-                        (item.filter == null ? '' : ' WHERE (' + item.filter + ')') +
-                        ' LIMIT :rowsLeft'
-                    )) {
-                    for (SObject record : records) {
-                        calObject.events.add(new CalendarEntry(
-                            item.objectApiName,
-                            (String) record.get(calObject.nameFieldApiName),
-                            (DateTime) record.get(item.startApiName),
-                            (DateTime) record.get(item.endApiName),
-                            (Id) record.get('Id')
-                        ));
+            if (!calObject.error) {
+                try {
+                    if (rowsLeft <= 0) {
+                        throw new AuraHandledException(System.Label.LEC_Too_Many_Records + ' ' + Limits.getLimitQueryRows());
                     }
-                    rowsLeft -= records.size();
+                    for (List<SObject> records : Database.query(
+                        String.escapeSingleQuotes('SELECT ' + calObject.nameFieldApiName + ',' + item.startApiName + ',' + item.endApiName + ' FROM ' + item.objectApiName) +
+                            (item.filter == null ? '' : ' WHERE (' + item.filter + ')') +
+                            ' LIMIT :rowsLeft'
+                        )) {
+                        for (SObject record : records) {
+                            calObject.events.add(new CalendarEntry(
+                                item.objectApiName,
+                                (String) record.get(calObject.nameFieldApiName),
+                                (DateTime) record.get(item.startApiName),
+                                (DateTime) record.get(item.endApiName),
+                                (Id) record.get('Id')
+                            ));
+                        }
+                        rowsLeft -= records.size();
+                    }
+                    calObject.color = item.color == null ? DEFAULT_COLOR : item.color;
+                } catch (QueryException e) {
+                    calObject.error = true;
+                    calObject.errorMsg = e.getMessage();
                 }
-                calObject.color = item.color == null ? DEFAULT_COLOR : item.color;
-            } catch (QueryException e) {
-                calObject.error = true;
-                calObject.errorMsg = e.getMessage();
             }
             eventRecords.add(calObject);
         }
@@ -189,7 +193,7 @@ public with sharing class LightningEnhancedCalendar {
 
     @SuppressWarnings('PMD.ExcessiveParameterList')
     @AuraEnabled
-    public static void updateRecord(String objectApiName, String startApiName, String endApiName, DateTime startDate, DateTime endDate, Id recordId) {
+    public static void updateRecord (String objectApiName, String startApiName, String endApiName, DateTime startDate, DateTime endDate, Id recordId) {
         try {
             SObject record = Database.query(
                 String.escapeSingleQuotes('SELECT ' + startApiName + ',' + endApiName + ' FROM ' + objectApiName + ' WHERE Id = :recordId')
@@ -211,7 +215,7 @@ public with sharing class LightningEnhancedCalendar {
      */
 
     @AuraEnabled
-    public static void deleteRecord(String objectApiName, Id recordId) {
+    public static void deleteRecord (String objectApiName, Id recordId) {
         delete as user Database.query(String.escapeSingleQuotes('SELECT Id FROM ' + objectApiName + ' WHERE Id = :recordId'));
     }
 
