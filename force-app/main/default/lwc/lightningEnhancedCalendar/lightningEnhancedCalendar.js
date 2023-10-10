@@ -54,8 +54,6 @@ import GO_TO_NEXT_PAGE from '@salesforce/label/c.LEC_Go_To_Next_Page';
 import GO_TO_DATE from '@salesforce/label/c.LEC_Go_To_Date';
 import DURATION from '@salesforce/label/c.LEC_Duration';
 import TYPE from '@salesforce/label/c.LEC_Type';
-import CALENDAR_ENTRY_SUCCESSFULLY_CREATED from '@salesforce/label/c.LEC_Calendar_Entry_Successfully_Created';
-import COULD_NOT_CREATE_CALENDAR_ENTRY from '@salesforce/label/c.LEC_Could_Not_Create_Calendar_Entry';
 import CALENDAR_ENTRY_SUCCESSFULLY_DELETED from '@salesforce/label/c.LEC_Calendar_Entry_Successfully_Deleted';
 import COULD_NOT_DELETE_CALENDAR_ENTRY from '@salesforce/label/c.LEC_Could_Not_Delete_Calendar_Entry';
 import CALENDAR_ENTRY_SUCCESSFULLY_UPDATED from '@salesforce/label/c.LEC_Calendar_Entry_Successfully_Updated';
@@ -411,7 +409,7 @@ export default class LightningEnhancedCalendar extends NavigationMixin(Lightning
 		LightningEnhancedCalendarCreateModal.open({
 			size: 'small',
 			description: 'Create new calendar entry',
-			objectProperties: this.objectProperties,
+			objectProperties: this.objectProperties
 		}).then((returnValue) => {
 			switch (returnValue.status) {
 				case 'cancel':

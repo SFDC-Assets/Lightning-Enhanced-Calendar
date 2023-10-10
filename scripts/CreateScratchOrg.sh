@@ -18,10 +18,7 @@
 #
 #  Contact: john.meyer@salesforce.com
 
-readonly orgAlias=$(jq --raw-output .defaultusername < .sfdx/sfdx-config.json) || {
-    echo "Make sure that \"jq\" is installed and that \"defaultusername\" is defined in .sfdx/sfdx-config.json." >&2
-    exit 1
-}
+readonly orgAlias="Lightning Enhanced Calendar"
 readonly devHubUserName=$(jq --raw-output .defaultdevhubusername < .sfdx/sfdx-config.json) || {
     echo "Make sure that \"jq\" is installed and that \"defaultdevhubusername\" is defined in .sfdx/sfdx-config.json." >&2
     exit 1
