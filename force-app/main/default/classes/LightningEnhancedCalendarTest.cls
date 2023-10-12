@@ -58,7 +58,7 @@ private without sharing class LightningEnhancedCalendarTest {
 			'[{"objectApiName": "Event", "startApiName": "StartDateTime", "endApiName": "EndDateTime", "color": "#3A87AD", "filter": "CreatedDate > 2005-01-01T01:00:00Z"}]',
 			null
 		);
-		Assert.areEqual(1, calObjects.size(), 'Retrieved ' + calObjects.size() + ' calendar events, should have been 1.');
+		Assert.isFalse(calObjects[0].error, 'getEvents should have succeeded.');
 		System.Test.stopTest();
 	}
 
@@ -79,11 +79,65 @@ private without sharing class LightningEnhancedCalendarTest {
 	private static void testBadObjectName() {
 		System.Test.startTest();
 		List<LightningEnhancedCalendar.CalendarObject> calObjects = LightningEnhancedCalendar.getEvents(
-			'[{"objectApiName": "BadObjectApiName", "startApiName": "BadFieldName", "endApiName": "EndDateTime", "color": "#3A87AD"}]',
+			'[{"objectApiName": "BadObjectApiName", "startApiName": "StartDateTime", "endApiName": "EndDateTime", "color": "#3A87AD"}]',
 			null
 		);
-		// Exception properly handled.
-		Assert.areEqual(calObjects.size(), calObjects.size(), 'Bad object exception was not handled.');
+		Assert.isTrue(calObjects[0].error, 'Bad object API name was not handled.');
+		System.Test.stopTest();
+	}
+
+	@isTest
+	private static void testBadStartApiName() {
+		System.Test.startTest();
+		List<LightningEnhancedCalendar.CalendarObject> calObjects = LightningEnhancedCalendar.getEvents(
+			'[{"objectApiName": "Event", "startApiName": "BadFieldName", "endApiName": "EndDateTime", "color": "#3A87AD"}]',
+			null
+		);
+		Assert.isTrue(calObjects[0].error, 'Bad start field API name was not handled.');
+		System.Test.stopTest();
+	}
+
+	@isTest
+	private static void testStartApiNameNotDateTime() {
+		System.Test.startTest();
+		List<LightningEnhancedCalendar.CalendarObject> calObjects = LightningEnhancedCalendar.getEvents(
+			'[{"objectApiName": "Event", "startApiName": "Subject", "endApiName": "EndDateTime", "color": "#3A87AD"}]',
+			null
+		);
+		Assert.isTrue(calObjects[0].error, 'Start field API name not a DateTime was not handled.');
+		System.Test.stopTest();
+	}
+
+	@isTest
+	private static void testBadEndApiName() {
+		System.Test.startTest();
+		List<LightningEnhancedCalendar.CalendarObject> calObjects = LightningEnhancedCalendar.getEvents(
+			'[{"objectApiName": "Event", "startApiName": "StartDateTime", "endApiName": "BadFieldName", "color": "#3A87AD"}]',
+			null
+		);
+		Assert.isTrue(calObjects[0].error, 'Bad end field API name was not handled.');
+		System.Test.stopTest();
+	}
+
+	@isTest
+	private static void testEndApiNameNotDateTime() {
+		System.Test.startTest();
+		List<LightningEnhancedCalendar.CalendarObject> calObjects = LightningEnhancedCalendar.getEvents(
+			'[{"objectApiName": "Event", "startApiName": "StartDateTime", "endApiName": "Subject", "color": "#3A87AD"}]',
+			null
+		);
+		Assert.isTrue(calObjects[0].error, 'Start field API name not a DateTime was not handled.');
+		System.Test.stopTest();
+	}
+
+	@isTest
+	private static void testBadQuery() {
+		System.Test.startTest();
+		List<LightningEnhancedCalendar.CalendarObject> calObjects = LightningEnhancedCalendar.getEvents(
+			'[{"objectApiName": "Event", "startApiName": "StartDateTime", "endApiName": "EndDateTime", "filter": "badWhereClause", "color": "#3A87AD"}]',
+			null
+		);
+		Assert.isTrue(calObjects[0].error, 'Bad query was not handled.');
 		System.Test.stopTest();
 	}
 
@@ -94,8 +148,7 @@ private without sharing class LightningEnhancedCalendarTest {
 			'[{"objectApiName": "Event", "startApiName": "BadFieldName", "endApiName": "EndDateTime", "color": "#3A87AD"}]',
 			null
 		);
-		// Exception properly handled.
-		Assert.areEqual(calObjects.size(), calObjects.size(), 'Bad object settings exception was not handled.');
+		Assert.isTrue(calObjects[0].error, 'Bad object settings exception was not handled.');
 		System.Test.stopTest();
 	}
 

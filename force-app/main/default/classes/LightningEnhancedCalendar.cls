@@ -24,7 +24,7 @@ public with sharing class LightningEnhancedCalendar {
     @testVisible private static final Integer TEST_MAXIMUM_ROWS = 10;
 
     //  Internal object representing the description of an object to be displayed on the calendar. The input to the
-    //  getEvents() method is a serialized JSON string representing this object.
+    //  getEvents() method is a serialized JSON string representing an array of these objects.
     private class ObjectListItem {
         private String objectApiName;
         private String customLabel;
@@ -35,7 +35,8 @@ public with sharing class LightningEnhancedCalendar {
         private String color;
     }
  
-    //  A serialized list of CalendarObjects will be returned to the component.
+    //  A serialized list of CalendarObjects will be returned to the component. Always check the error field first; if true, no fields
+    //  other than objectApiName, objectLabel, and errorMsg are guaranteed to hold valid values.
     public class CalendarObject {
         @AuraEnabled public String objectApiName;
         @AuraEnabled public String objectLabel;
@@ -60,16 +61,24 @@ public with sharing class LightningEnhancedCalendar {
                 Map<String,Schema.SObjectField> fields = dsor.fields.getMap();
                 this.objectApiName = objectApiName;
                 this.objectLabel = customLabel == null ? dsor.getLabel() : customLabel;
-                this.nameFieldApiName = nameFieldApiName == null ? getNameField(fields.values()) : nameFieldApiName;
-                this.nameFieldLabel = fields.get(this.nameFieldApiName)?.getDescribe().getLabel();
                 this.startApiName = startApiName;
                 this.startLabel = fields.get(startApiName)?.getDescribe().getLabel();
                 this.endApiName = endApiName;
                 this.endLabel = fields.get(endApiName)?.getDescribe().getLabel();
-                this.events = new List<CalendarEntry>();
-                this.color = DEFAULT_COLOR;
-                this.error = false;
-                this.errorMsg = null;
+                if (fields.get(startApiName)?.getDescribe().getType().name() != 'DateTime') {
+                    this.error = true;
+                    this.errorMsg = System.Label.LEC_Bad_Objects_String + ' (' + objectApiName + ':' + startApiName + ')';
+                } else if (fields.get(endApiName)?.getDescribe().getType().name() != 'DateTime') {
+                    this.error = true;
+                    this.errorMsg = System.Label.LEC_Bad_Objects_String + ' (' + objectApiName + ':' + endApiName + ')';
+                } else {
+                    this.error = false;
+                    this.errorMsg = null;
+                    this.nameFieldApiName = nameFieldApiName == null ? getNameField(fields.values()) : nameFieldApiName;
+                    this.nameFieldLabel = fields.get(this.nameFieldApiName)?.getDescribe().getLabel();    
+                    this.events = new List<CalendarEntry>();
+                    this.color = DEFAULT_COLOR;
+                }
             }
         }
     }
@@ -95,7 +104,7 @@ public with sharing class LightningEnhancedCalendar {
     /**
      * Retrieves the list of objects along with their event entries to display on the calendar.
      *
-     * @param objectsString  A JSON string that will be deserialized into a list of ObjectListItem objects. Each item must contain:
+     * @param objectsString  A JSON string that will be deserialized into a list of ObjectListItem objects.
      * @param recordId       (optional) The Id of a parent record used in an (optional) filter if used on a record page.
      * @return               The list of objects with entries to display on the calendar.
      * @throws AuraHandledException If the object string is bad or if there are too many objects or too many calendar entry records
@@ -106,7 +115,7 @@ public with sharing class LightningEnhancedCalendar {
     public static List<CalendarObject> getEvents (String objectsString, Id recordId) {
 
         List<ObjectListItem> objects;
-        Integer rowsLeft = System.Test.isRunningTest() ? TEST_MAXIMUM_ROWS : Limits.getLimitQueryRows();
+        Integer recordsRemaining = System.Test.isRunningTest() ? TEST_MAXIMUM_ROWS : Limits.getLimitQueryRows();
 
         //  Decode the objects string that was passed in from Lightning App Builder and make sure we don't exceed the governor
         //  limits (we must do a SOQL query for each object). Unlikely, but let's be sure.
@@ -115,7 +124,7 @@ public with sharing class LightningEnhancedCalendar {
             if (objects.size() > Limits.getLimitQueries()) {
                 throw new AuraHandledException(System.Label.LEC_Too_Many_Objects + ' ' + Limits.getLimitQueries());
             }    
-        } catch (Exception e) {
+        } catch (JSONException e) {
             throw new AuraHandledException(System.Label.LEC_Bad_Objects_String);
         }
 
@@ -124,16 +133,17 @@ public with sharing class LightningEnhancedCalendar {
         //  that can result from corrupted filters, for example.
         List<CalendarObject> eventRecords = new List<CalendarObject>();
         for (ObjectListItem item : objects) {
+            if (recordsRemaining <= 0) {
+                throw new AuraHandledException(System.Label.LEC_Too_Many_Records + ' ' + Limits.getLimitQueryRows());
+            }
             CalendarObject calObject = new CalendarObject(item.objectApiName, item.customLabel, item.nameFieldApiName, item.startApiName, item.endApiName);
             if (!calObject.error) {
                 try {
-                    if (rowsLeft <= 0) {
-                        throw new AuraHandledException(System.Label.LEC_Too_Many_Records + ' ' + Limits.getLimitQueryRows());
-                    }
                     for (List<SObject> records : Database.query(
                         String.escapeSingleQuotes('SELECT ' + calObject.nameFieldApiName + ',' + item.startApiName + ',' + item.endApiName + ' FROM ' + item.objectApiName) +
                             (item.filter == null ? '' : ' WHERE (' + item.filter + ')') +
-                            ' LIMIT :rowsLeft'
+                            ' ORDER BY ' + item.startApiName + ' ASC' +
+                            ' LIMIT ' + recordsRemaining
                         )) {
                         for (SObject record : records) {
                             calObject.events.add(new CalendarEntry(
@@ -144,12 +154,12 @@ public with sharing class LightningEnhancedCalendar {
                                 (Id) record.get('Id')
                             ));
                         }
-                        rowsLeft -= records.size();
+                        recordsRemaining -= records.size();
                     }
                     calObject.color = item.color == null ? DEFAULT_COLOR : item.color;
                 } catch (QueryException e) {
                     calObject.error = true;
-                    calObject.errorMsg = e.getMessage();
+                    calObject.errorMsg = item.objectApiName + ': ' + e.getMessage();
                 }
             }
             eventRecords.add(calObject);

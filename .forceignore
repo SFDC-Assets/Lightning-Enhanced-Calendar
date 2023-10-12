@@ -25,3 +25,5 @@ force-app/main/default/objects/Contact/listViews/All.listView-meta.xml
 Account.All.listView
 Contact.All.listView
 force-app/main/default/applications/standard__LightningSales.app-meta.xml
+force-app/main/default/reports/**
+force-app/main/default/dashboards/**

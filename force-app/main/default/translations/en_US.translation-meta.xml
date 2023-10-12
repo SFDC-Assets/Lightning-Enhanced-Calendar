@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Translations xmlns="http://soap.sforce.com/2006/04/metadata">
+<Translations xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <customApplications>
+        <description xsi:nil="true"/>
         <label><!-- Lightning Enhanced Calendar Test Bed --></label>
         <name>Lightning_Enhanced_Calendar_Test_Bed</name>
     </customApplications>
@@ -57,7 +58,7 @@
         <name>LEC_Could_Not_Load_Calendar</name>
     </customLabels>
     <customLabels>
-        <label><!-- Used by Lightning Enhanced Calendar --></label>
+        <label>Could not load calendar entries</label>
         <name>LEC_Could_Not_Load_Calendar_Entries</name>
     </customLabels>
     <customLabels>
@@ -171,6 +172,14 @@
     <customLabels>
         <label>Toggle year view</label>
         <name>LEC_Toggle_Year_View</name>
+    </customLabels>
+    <customLabels>
+        <label>You have too many items in your object list. The maximum is</label>
+        <name>LEC_Too_Many_Objects</name>
+    </customLabels>
+    <customLabels>
+        <label>You are trying to display too many items. The maximum is</label>
+        <name>LEC_Too_Many_Records</name>
     </customLabels>
     <customLabels>
         <label>Type</label>

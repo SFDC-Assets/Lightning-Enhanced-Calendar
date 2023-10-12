@@ -134,12 +134,17 @@ If you create a scratch org testbed environment using the included `CreateScratc
 - The [FullCalendar library](https://fullcalendar.io) version used by this package is 4.3.1, the most recent of the 4.*x* generation, which is (according to several Internet posts at the time of this writing) the last version that works and plays well with the Salesforce Lightning Web Components framework. One day if I have time before I retire, I may try to get things working with a more recent version, but it's not high on my priority list and 4.3.1 does everything I need it to.
 - Although the FullCalendar library can handle all-day and repeating events, the LWC does not provide any interface for managing them.
 - The calendar may not display on first load even though no errors are displayed. I believe this is due to a race condition somewhere in loading the FullCalendar JavaScript libraries, but have not been able to locate the problem. A page refresh (or two) usually fixes the problem.
+- Creating a new calendar entry will take you to the standard New Action page in another tab rather than a clean modal in the component. This is so that all required fields can be entered appropriately. I could have tried to gather up the required fields and rendered them in a custom modal inside the component, but that's getting to be quite a lot of work. The upshot is that since it will take you to a standard new tab, there's no easy way to alert the calendar component that the record has been inserted and you will have to go back to the original page and refresh it.
 
 ## Troubleshooting
 
 - **The component will not install**: You must have Translation Workbench enabled in the target org with English, German, French, and Spanish activated. If you are getting other errors, try pulling down the "Advanced Options" twisty on the Salesforce installer page and select "Compile only the Apex in the package".
 - **The component does not display on the page**: If a page refresh (or two) does not fix the problem, make sure you have assigned the `Lightning Enhanced Calendar` permission set to the current user.
-- **The component is complaining that my Objects configuration variable is corrupt**: Please double-check your JSON string. The keys must be entered *exactly* as shown (upper- and lower-case is important). Keys and values *must* be surrounded by double-quotes("). Also, the string must represent an array, even if there is only one object to display.
+- **The component is complaining that my Objects configuration variable is corrupt**: There are several possible reasons for this.
+  - The string is a badly-formed JSON array of objects. The keys must be entered *exactly* as shown (upper- and lower-case is important). Keys and values *must* be surrounded by double-quotes("). Also, the string must represent an array, even if there is only one object to display.
+  - One of the object API names is incorrect (the error message should tell you which one).
+  - One of the field API names is incorrect (the error message should tell you which one).
+  - One of the field API names is correct, but doesn't represent a `DateTime` field (the error message should tell you which one).
 - **The component displays, but the records from one or more of the objects is not showing**: Have a *VERY* careful look at the JSON string and make sure that the API names are absolutely correct.
 - **When I try to create a new Salesforce Event record by dragging, the start and end dates show the current date and time**: This is a quirk of the Create action for the standard Salesforce ```Event``` object. Custom objects don't seem to exhibit this behavior.
 - **I'm getting an error about too many objects**: The component does a SOQL query for each of the objects you specify in the `Objects` configuration string. [Salesforce governor limits](https://developer.salesforce.com/docs/atlas.en-us.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_apexgov.htm) limit the number of SOQL queries in a single synchronous transaction to 100, so you may not try to show records from more than 100 objects. You probably will never see this message, but you never know.
@@ -155,15 +160,15 @@ The FullCalendar and Moment libraries contained in the static resource, however,
 
 I am a pre-sales Solutions Engineer for [Salesforce](https://www.salesforce.com) and I develop solutions for my customers to demonstrate the capabilities of the amazing Salesforce platform. *This package represents functionality that I have used for demonstration purposes and the content herein is definitely not ready for actual production use; specifically, it has not been tested extensively nor has it been written with security and access controls in mind. By installing this package, you assume all risk for any consequences and agree not to hold me or my company liable.* If you are OK with that ...
 
-[Install the Package in Production](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tHu0000049eVbIAI)
+[Install the Package in Production](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tHu0000049efTIAQ)
 
-[Install the Package in a Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tHu0000049eVbIAI)
+[Install the Package in a Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tHu0000049efTIAQ)
 
 ## Maintainer
 
 John Meyer, Salesforce Solution Engineer
 
-**Current Version**: 1.0.6
+**Current Version**: 1.0.7
 
 ## References
 
