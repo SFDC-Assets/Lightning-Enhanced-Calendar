@@ -131,6 +131,17 @@ private without sharing class LightningEnhancedCalendarTest {
 	}
 
 	@isTest
+	private static void testBadNameFieldApiName() {
+		System.Test.startTest();
+		List<LightningEnhancedCalendar.CalendarObject> calObjects = LightningEnhancedCalendar.getEvents(
+			'[{"objectApiName": "Event", "startApiName": "StartDateTime", "endApiName": "EndDateTime", "nameFieldApiName": "BadFieldName", "color": "#3A87AD"}]',
+			null
+		);
+		Assert.isTrue(calObjects[0].error, 'Bad name field API name was not handled.');
+		System.Test.stopTest();
+	}
+
+	@isTest
 	private static void testBadQuery() {
 		System.Test.startTest();
 		List<LightningEnhancedCalendar.CalendarObject> calObjects = LightningEnhancedCalendar.getEvents(

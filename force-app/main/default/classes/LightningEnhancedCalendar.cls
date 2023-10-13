@@ -36,7 +36,7 @@ public with sharing class LightningEnhancedCalendar {
     }
  
     //  A serialized list of CalendarObjects will be returned to the component. Always check the error field first; if true, no fields
-    //  other than objectApiName, objectLabel, and errorMsg are guaranteed to hold valid values.
+    //  other than objectApiName, error, and errorMsg are guaranteed to hold valid values.
     public class CalendarObject {
         @AuraEnabled public String objectApiName;
         @AuraEnabled public String objectLabel;
@@ -54,28 +54,31 @@ public with sharing class LightningEnhancedCalendar {
         @SuppressWarnings('PMD.ExcessiveParameterList')
         public CalendarObject(String objectApiName, String customLabel, String nameFieldApiName, String startApiName, String endApiName) {            
             Schema.DescribeSObjectResult dsor = Schema.getGlobalDescribe().get(objectApiName)?.getDescribe();
+            this.objectApiName = objectApiName;
             if (dsor == null) {
                 this.error = true;
                 this.errorMsg = System.Label.LEC_Bad_Objects_String + ' (' + objectApiName + ')';
             } else {
                 Map<String,Schema.SObjectField> fields = dsor.fields.getMap();
-                this.objectApiName = objectApiName;
+                this.nameFieldApiName = nameFieldApiName == null ? getNameField(fields.values()) : nameFieldApiName;
+                this.nameFieldLabel = fields.get(this.nameFieldApiName)?.getDescribe().getLabel();    
                 this.objectLabel = customLabel == null ? dsor.getLabel() : customLabel;
                 this.startApiName = startApiName;
                 this.startLabel = fields.get(startApiName)?.getDescribe().getLabel();
                 this.endApiName = endApiName;
                 this.endLabel = fields.get(endApiName)?.getDescribe().getLabel();
-                if (fields.get(startApiName)?.getDescribe().getType().name() != 'DateTime') {
+                if (fields.get(this.nameFieldApiName) == null) {
                     this.error = true;
-                    this.errorMsg = System.Label.LEC_Bad_Objects_String + ' (' + objectApiName + ':' + startApiName + ')';
-                } else if (fields.get(endApiName)?.getDescribe().getType().name() != 'DateTime') {
+                    this.errorMsg = System.Label.LEC_Bad_Objects_String + ' (' + this.objectApiName + ':' + this.nameFieldApiName + ')';
+                } else if (fields.get(this.startApiName)?.getDescribe().getType().name().toUpperCase() != 'DATETIME') {
                     this.error = true;
-                    this.errorMsg = System.Label.LEC_Bad_Objects_String + ' (' + objectApiName + ':' + endApiName + ')';
+                    this.errorMsg = System.Label.LEC_Bad_Objects_String + ' (' + this.objectApiName + ':' + this.startApiName + ')';
+                } else if (fields.get(this.endApiName)?.getDescribe().getType().name().toUpperCase() != 'DATETIME') {
+                    this.error = true;
+                    this.errorMsg = System.Label.LEC_Bad_Objects_String + ' (' + this.objectApiName + ':' + this.endApiName + ')';
                 } else {
                     this.error = false;
                     this.errorMsg = null;
-                    this.nameFieldApiName = nameFieldApiName == null ? getNameField(fields.values()) : nameFieldApiName;
-                    this.nameFieldLabel = fields.get(this.nameFieldApiName)?.getDescribe().getLabel();    
                     this.events = new List<CalendarEntry>();
                     this.color = DEFAULT_COLOR;
                 }
@@ -110,19 +113,18 @@ public with sharing class LightningEnhancedCalendar {
      * @throws AuraHandledException If the object string is bad or if there are too many objects or too many calendar entry records
      */
 
-    @SuppressWarnings('PMD.OperationWithLimitsInLoop')
     @AuraEnabled(cacheable=true)
     public static List<CalendarObject> getEvents (String objectsString, Id recordId) {
 
         List<ObjectListItem> objects;
-        Integer recordsRemaining = System.Test.isRunningTest() ? TEST_MAXIMUM_ROWS : Limits.getLimitQueryRows();
+        Integer recordsRemaining = System.Test.isRunningTest() ? TEST_MAXIMUM_ROWS : Limits.getLimitQueryRows() - Limits.getQueryRows();
 
         //  Decode the objects string that was passed in from Lightning App Builder and make sure we don't exceed the governor
         //  limits (we must do a SOQL query for each object). Unlikely, but let's be sure.
         try {
             objects = (List<ObjectListItem>) JSON.deserialize(objectsString, List<ObjectListItem>.class);
-            if (objects.size() > Limits.getLimitQueries()) {
-                throw new AuraHandledException(System.Label.LEC_Too_Many_Objects + ' ' + Limits.getLimitQueries());
+            if (objects.size() > Limits.getLimitQueries() - Limits.getQueries()) {
+                throw new AuraHandledException(System.Label.LEC_Too_Many_Objects + ' ' + (Limits.getLimitQueries() - Limits.getQueries()));
             }    
         } catch (JSONException e) {
             throw new AuraHandledException(System.Label.LEC_Bad_Objects_String);
@@ -138,6 +140,7 @@ public with sharing class LightningEnhancedCalendar {
             }
             CalendarObject calObject = new CalendarObject(item.objectApiName, item.customLabel, item.nameFieldApiName, item.startApiName, item.endApiName);
             if (!calObject.error) {
+                //  The object and field API names of this particular item have now been checked for validity, so get the records.
                 try {
                     for (List<SObject> records : Database.query(
                         String.escapeSingleQuotes('SELECT ' + calObject.nameFieldApiName + ',' + item.startApiName + ',' + item.endApiName + ' FROM ' + item.objectApiName) +

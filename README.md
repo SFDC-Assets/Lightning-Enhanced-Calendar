@@ -143,12 +143,11 @@ If you create a scratch org testbed environment using the included `CreateScratc
 - **The component is complaining that my Objects configuration variable is corrupt**: There are several possible reasons for this.
   - The string is a badly-formed JSON array of objects. The keys must be entered *exactly* as shown (upper- and lower-case is important). Keys and values *must* be surrounded by double-quotes("). Also, the string must represent an array, even if there is only one object to display.
   - One of the object API names is incorrect (the error message should tell you which one).
-  - One of the field API names is incorrect (the error message should tell you which one).
-  - One of the field API names is correct, but doesn't represent a `DateTime` field (the error message should tell you which one).
+  - One of the field API names is incorrect or of the wrong type (the error message should tell you which one). The `startApiName` and `endApiName` fields must be `DateTime`s and the optional `nameFieldApiName` must be text.
 - **The component displays, but the records from one or more of the objects is not showing**: Have a *VERY* careful look at the JSON string and make sure that the API names are absolutely correct.
 - **When I try to create a new Salesforce Event record by dragging, the start and end dates show the current date and time**: This is a quirk of the Create action for the standard Salesforce ```Event``` object. Custom objects don't seem to exhibit this behavior.
 - **I'm getting an error about too many objects**: The component does a SOQL query for each of the objects you specify in the `Objects` configuration string. [Salesforce governor limits](https://developer.salesforce.com/docs/atlas.en-us.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_apexgov.htm) limit the number of SOQL queries in a single synchronous transaction to 100, so you may not try to show records from more than 100 objects. You probably will never see this message, but you never know.
-- **I'm getting an error about too many items**: [Salesforce governor limits](https://developer.salesforce.com/docs/atlas.en-us.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_apexgov.htm) limit the number of total rows returned in a single transaction to 50,000. If you have more than 50,000 records in all of the objects in the `Objects` configuration string, you will see this message. Hopefully, you will not try to show your customers more than this many records on a single component. Try to pare down some of them with filters.
+- **I'm getting an error about too many items**: [Salesforce governor limits](https://developer.salesforce.com/docs/atlas.en-us.salesforce_app_limits_cheatsheet.meta/salesforce_app_limits_cheatsheet/salesforce_app_limits_platform_apexgov.htm) limit the number of total rows returned in a single transaction to 50,000. If you have more than 50,000 records in all of the objects in the `Objects` configuration string, you will see this message. Hopefully, you will not try to show your users more than this many records on a single component. Try to pare down some of them with filters.
 
 ## Licensing
 
@@ -160,15 +159,15 @@ The FullCalendar and Moment libraries contained in the static resource, however,
 
 I am a pre-sales Solutions Engineer for [Salesforce](https://www.salesforce.com) and I develop solutions for my customers to demonstrate the capabilities of the amazing Salesforce platform. *This package represents functionality that I have used for demonstration purposes and the content herein is definitely not ready for actual production use; specifically, it has not been tested extensively nor has it been written with security and access controls in mind. By installing this package, you assume all risk for any consequences and agree not to hold me or my company liable.* If you are OK with that ...
 
-[Install the Package in Production](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tHu0000049efTIAQ)
+[Install the Package in Production](https://login.salesforce.com/packaging/installPackage.apexp?p0=04tHu0000049fGsIAI)
 
-[Install the Package in a Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tHu0000049efTIAQ)
+[Install the Package in a Sandbox](https://test.salesforce.com/packaging/installPackage.apexp?p0=04tHu0000049fGsIAI)
 
 ## Maintainer
 
 John Meyer, Salesforce Solution Engineer
 
-**Current Version**: 1.0.7
+**Current Version**: 1.0.8
 
 ## References
 

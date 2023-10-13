@@ -209,7 +209,7 @@ export default class LightningEnhancedCalendar extends NavigationMixin(Lightning
 						if (calObject.error) {
 							this.dispatchEvent(
 								new ShowToastEvent({
-									title: `${COULD_NOT_GET_CALENDAR_ENTRIES_FOR} ${calObject.objectLabel}`,
+									title: `${COULD_NOT_GET_CALENDAR_ENTRIES_FOR} ${calObject.objectApiName}`,
 									message: calObject.errorMsg,
 									variant: 'error',
 									mode: 'sticky'
@@ -323,7 +323,7 @@ export default class LightningEnhancedCalendar extends NavigationMixin(Lightning
 				this.dispatchEvent(
 					new ShowToastEvent({
 						title: COULD_NOT_LOAD_CALENDAR_ENTRIES,
-						message: error.body.message,
+						message: this.reduceErrors(error),
 						variant: 'error',
 						mode: 'sticky'
 					})
@@ -496,7 +496,7 @@ export default class LightningEnhancedCalendar extends NavigationMixin(Lightning
 							this.dispatchEvent(
 								new ShowToastEvent({
 									title: COULD_NOT_DELETE_CALENDAR_ENTRY,
-									message: error.body.message,
+									message: this.reduceErrors(error),
 									variant: 'error',
 									mode: 'sticky'
 								})
@@ -573,7 +573,7 @@ export default class LightningEnhancedCalendar extends NavigationMixin(Lightning
 							this.dispatchEvent(
 								new ShowToastEvent({
 									title: COULD_NOT_UPDATE_CALENDAR_ENTRY,
-									message: error.body.message,
+									message: this.reduceErrors(error),
 									variant: 'error',
 									mode: 'sticky'
 								})
@@ -598,5 +598,61 @@ export default class LightningEnhancedCalendar extends NavigationMixin(Lightning
 		jsEvent.preventDefault();
 		jsEvent.stopPropagation();
 		this.eventChange(jsEvent.detail.event, jsEvent.detail.prevEvent);
+	}
+
+	// From LWC Utilities: https://github.com/trailheadapps/lwc-recipes/blob/main/force-app/main/default/lwc/ldsUtils/ldsUtils.js
+	// See also: https://developer.salesforce.com/blogs/2020/08/error-handling-best-practices-for-lightning-web-components
+	reduceErrors(errors) {
+		if (!Array.isArray(errors)) errors = [errors];
+		return JSON.stringify(
+			errors
+				// Remove null/undefined items
+				.filter((error) => !!error)
+				// Extract an error message
+				.map((error) => {
+					// UI API read errors
+					if (Array.isArray(error.body)) {
+						return error.body.map((e) => e.message);
+					}
+					// Page level errors
+					else if (error?.body?.pageErrors && error.body.pageErrors.length > 0) {
+						return error.body.pageErrors.map((e) => e.message);
+					}
+					// Field level errors
+					else if (error?.body?.fieldErrors && Object.keys(error.body.fieldErrors).length > 0) {
+						const fieldErrors = [];
+						Object.values(error.body.fieldErrors).forEach((errorArray) => {
+							fieldErrors.push(...errorArray.map((e) => e.message));
+						});
+						return fieldErrors;
+					}
+					// UI API DML page level errors
+					else if (error?.body?.output?.errors && error.body.output.errors.length > 0) {
+						return error.body.output.errors.map((e) => e.message);
+					}
+					// UI API DML field level errors
+					else if (error?.body?.output?.fieldErrors && Object.keys(error.body.output.fieldErrors).length > 0) {
+						const fieldErrors = [];
+						Object.values(error.body.output.fieldErrors).forEach((errorArray) => {
+							fieldErrors.push(...errorArray.map((e) => e.message));
+						});
+						return fieldErrors;
+					}
+					// UI API DML, Apex and network errors
+					else if (error.body && typeof error.body.message === 'string') {
+						return error.body.message;
+					}
+					// JS errors
+					else if (typeof error.message === 'string') {
+						return error.message;
+					}
+					// Unknown error shape so try HTTP status text
+					return error.statusText;
+				})
+				// Flatten
+				.reduce((prev, curr) => prev.concat(curr), [])
+				// Remove empty strings
+				.filter((message) => !!message)
+		);
 	}
 }
